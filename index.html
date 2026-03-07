@@ -52,6 +52,9 @@
     <!-- Hero Section -->
     <header class="hero section-padding">
         <div class="container hero-inner text-center">
+
+
+
             <div class="badge animate-fade-in"><span class="badge-dot"></span> Open-Source App Store</div>
             <h1 class="hero-title animate-slide-up">The open source app store for <br><span class="text-gradient">GitHub
                     releases</span></h1>
@@ -59,13 +62,18 @@
                 install APKs instantly — all in one place. <br>Developed using pure Kotlin, optimized for modern Android
                 devices.</p>
 
+            <div class="availability-text animate-slide-up-delay">
+                <i class="fa-brands fa-android" style="color: #3DDC84;"></i> Available on Android
+            </div>
+
             <div class="hero-buttons">
                 <a href="https://github.com/samyak2403/RepoStore/releases/latest" target="_blank"
                     class="btn btn-primary btn-large">
                     <i class="fa-solid fa-download"></i> Download Latest
                 </a>
                 <a href="https://f-droid.org/packages/com.samyak.repostore/" target="_blank" class="store-badge-link">
-                    <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" class="store-badge">
+                    <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" class="store-badge"
+                        style="transform: scale(1.25); transform-origin: center;">
                 </a>
                 <a href="https://apt.izzysoft.de/packages/com.samyak.repostore" target="_blank"
                     class="store-badge-link">
@@ -83,12 +91,22 @@
                         <div class="window-title">RepoStore Preview</div>
                     </div>
                     <div class="app-window-body screenshot-gallery">
-                        <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/1.png"
-                            alt="RepoStore Home">
-                        <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/4.png"
-                            alt="RepoStore Details">
-                        <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/9.png"
-                            alt="RepoStore Settings">
+                        <div class="gallery-track">
+                            <!-- First set of images -->
+                            <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/1.png"
+                                alt="RepoStore Home">
+                            <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/4.png"
+                                alt="RepoStore Details">
+                            <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/9.png"
+                                alt="RepoStore Settings">
+                            <!-- Duplicated set of images for infinite scroll illusion -->
+                            <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/1.png"
+                                alt="RepoStore Home">
+                            <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/4.png"
+                                alt="RepoStore Details">
+                            <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/9.png"
+                                alt="RepoStore Settings">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -247,7 +265,8 @@
                     <i class="fa-solid fa-download"></i> Download Latest Release
                 </a>
                 <a href="https://f-droid.org/packages/com.samyak.repostore/" target="_blank" class="store-badge-link">
-                    <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" class="store-badge">
+                    <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" class="store-badge"
+                        style="transform: scale(1.25); transform-origin: center;">
                 </a>
                 <a href="https://apt.izzysoft.de/packages/com.samyak.repostore" target="_blank"
                     class="store-badge-link">
@@ -284,7 +303,7 @@
                     <h4>Community</h4>
                     <ul>
                         <li><a href="https://github.com/samyak2403/RepoStore/issues">Submit Issue</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="privacy-policy/">Privacy Policy</a></li>
                         <li><a href="mailto:contact@repostore.local">Support</a></li>
                     </ul>
                 </div>
