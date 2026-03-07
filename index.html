@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoStore - The App Store for GitHub Releases</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="icon.png" alt="RepoStore Logo" class="logo-img"> RepoStore
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#developers">Developers</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="#download" class="btn btn-primary nav-download">Download</a>
+                <button class="menu-toggle icon-btn" id="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#developers">Developers</a></li>
+                <li><a href="#download" class="btn btn-primary"
+                        style="display: inline-block; text-align: center; width: 100%;">Download Latest</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero section-padding">
+        <div class="container hero-inner text-center">
+            <div class="badge animate-fade-in"><span class="badge-dot"></span> Open-Source App Store</div>
+            <h1 class="hero-title animate-slide-up">The open source app store for <br><span class="text-gradient">GitHub
+                    releases</span></h1>
+            <p class="hero-subtitle animate-slide-up-delay">Explore apps published on GitHub, view release details, and
+                install APKs instantly — all in one place. <br>Developed using pure Kotlin, optimized for modern Android
+                devices.</p>
+
+            <div class="hero-buttons animate-fade-in-delay">
+                <a href="https://github.com/samyak2403/RepoStore/releases/latest" class="btn btn-primary btn-large">
+                    <i class="fa-brands fa-android"></i> Download Latest
+                </a>
+                <a href="https://github.com/samyak2403/RepoStore" target="_blank" class="btn btn-secondary btn-large">
+                    <i class="fa-brands fa-github"></i> View Source
+                </a>
+            </div>
+
+            <div class="hero-visual animate-slide-up-delay-2">
+                <div class="app-window">
+                    <div class="app-window-header">
+                        <div class="window-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="window-title">RepoStore Preview</div>
+                    </div>
+                    <div class="app-window-body screenshot-gallery">
+                        <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/1.png"
+                            alt="RepoStore Home">
+                        <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/4.png"
+                            alt="RepoStore Details">
+                        <img src="https://raw.githubusercontent.com/samyak2403/RepoStore/main/screenshots/9.png"
+                            alt="RepoStore Settings">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features section-padding reveal">
+        <div class="container">
+            <div class="section-header text-center max-w-2xl mx-auto">
+                <h2>Everything you need, nothing you don't</h2>
+                <p>RepoStore turns GitHub releases into a clean, Play Store style experience on Android.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <h3>Smart Discovery</h3>
+                    <p>Home sections for Trending, Recently Updated, and Featured projects. Only repos with valid APK
+                        assets are shown — zero source-only noise.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <h3>Latest-Release Installs</h3>
+                    <p>Fetches the latest release for each repo. Contains a single Install action with download progress
+                        delegating to the system installer.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-arrows-rotate"></i></div>
+                    <h3>Update Tracking</h3>
+                    <p>Tracks installations and detects when updates are available. Shows an Open button for installed
+                        apps to keep you in the loop.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works section-padding bg-alt reveal">
+        <div class="container">
+            <div class="section-header max-w-2xl mx-auto">
+                <h2>From discovery to install in seconds</h2>
+                <p>A seamless pipeline built entirely on top of the public GitHub API.</p>
+            </div>
+
+            <div class="steps-horizontal">
+                <div class="step-item">
+                    <div class="step-icon-wrapper">
+                        <div class="step-number">1</div>
+                        <div class="step-line">
+                            <div class="step-line-fill"></div>
+                            <i class="fa-solid fa-chevron-right step-line-arrow"></i>
+                        </div>
+                    </div>
+                    <div class="step-content">
+                        <h3>Search & Discovery</h3>
+                        <p>Uses GitHub's API to find projects meeting strict conditions based on topics and languages.
+                        </p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-icon-wrapper">
+                        <div class="step-number">2</div>
+                        <div class="step-line">
+                            <div class="step-line-fill" style="animation-delay: 1.5s;"></div>
+                            <i class="fa-solid fa-chevron-right step-line-arrow" style="animation-delay: 1.5s;"></i>
+                        </div>
+                    </div>
+                    <div class="step-content">
+                        <h3>Discover</h3>
+                        <p>Read READMEs, changelogs, and stats — all pulled authentically in one clean interface.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-icon-wrapper">
+                        <div class="step-number">3</div>
+                        <div class="step-line">
+                            <div class="step-line-fill" style="animation-delay: 3s;"></div>
+                            <i class="fa-solid fa-chevron-right step-line-arrow" style="animation-delay: 3s;"></i>
+                        </div>
+                    </div>
+                    <div class="step-content">
+                        <h3>Install</h3>
+                        <p>One tap downloads the right APK binary and hands it to your OS package manager.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-icon-wrapper">
+                        <div class="step-number">4</div>
+                    </div>
+                    <div class="step-content">
+                        <h3>Stay Updated</h3>
+                        <p>Receive new release notifications — update with a single tap, every time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Developers Section -->
+    <section id="developers" class="developers section-padding reveal">
+        <div class="container">
+            <div class="developer-box">
+                <div class="dev-content">
+                    <h2>Get your app listed</h2>
+                    <p>No manual submission needed. RepoStore uses the public GitHub Search API — if your project meets
+                        these conditions, it appears automatically.</p>
+                    <ul class="check-list">
+                        <li><i class="fa-solid fa-check text-accent"></i> Public repository on GitHub</li>
+                        <li><i class="fa-solid fa-check text-accent"></i> At least one published, non-draft release</li>
+                        <li><i class="fa-solid fa-check text-accent"></i> Installable assets (.apk)</li>
+                        <li><i class="fa-solid fa-check text-accent"></i> Relevant topics and description for
+                            discoverability</li>
+                    </ul>
+                    <a href="https://github.com/Samyak-Kamble" target="_blank" class="btn btn-secondary mt-4">
+                        <i class="fa-solid fa-book"></i> Read the Wiki
+                    </a>
+                </div>
+                <div class="dev-visual">
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <pre><code>{
+  "name": "RepoStore",
+  "owner": {
+    "login": "samyak2403"
+  },
+  "has_downloads": true,
+  "topics": [
+    "android",
+    "kotlin",
+    "github-app"
+  ],
+  "releases_url": "..."
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="download" class="cta section-padding reveal">
+        <div class="container text-center max-w-2xl mx-auto">
+            <h2 class="cta-title">Ready to try RepoStore?</h2>
+            <p class="cta-subtitle">100% free, no ads, no tracking. Join over 300+ stargazers who discover and install
+                open-source
+                software the easy way — directly from the source.</p>
+
+            <div class="cta-buttons flex-wrap">
+                <a href="https://github.com/samyak2403/RepoStore/releases/latest" target="_blank"
+                    class="btn btn-primary btn-large">
+                    <i class="fa-solid fa-download"></i> Download Latest Release
+                </a>
+                <a href="https://github.com/samyak2403/RepoStore/stargazers" target="_blank"
+                    class="btn btn-secondary btn-large">
+                    <i class="fa-solid fa-star"></i> Star on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="icon.png" alt="RepoStore Logo" class="logo-img"> RepoStore
+                    </div>
+                    <p>The open source app store for GitHub releases on Android.</p>
+                    <p class="dev-credit">Developed by <a href="https://github.com/samyak2403" target="_blank"
+                            class="text-accent">Samyak Kamble</a></p>
+                </div>
+
+                <div class="footer-links-group">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/samyak2403/RepoStore">Source Code</a></li>
+                        <li><a href="https://github.com/samyak2403/RepoStore/wiki">Wiki</a></li>
+                        <li><a href="https://github.com/samyak2403/RepoStore/releases">Releases</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-group">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/samyak2403/RepoStore/issues">Submit Issue</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="mailto:contact@repostore.local">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 RepoStore. All rights reserved.</p>
+                <div class="social-icons">
+                    <a href="https://github.com/samyak2403/RepoStore" aria-label="GitHub"><i
+                            class="fa-brands fa-github"></i></a>
+                    <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
