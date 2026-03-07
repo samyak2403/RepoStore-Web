@@ -413,6 +413,23 @@ h4 {
     display: flex;
     gap: 16px;
     margin-bottom: 64px;
+    align-items: center;
+}
+
+.store-badge-link {
+    display: inline-block;
+    height: 48px;
+    /* Standardize height with buttons */
+    transition: transform var(--transition);
+}
+
+.store-badge-link:hover {
+    transform: translateY(-2px);
+}
+
+.store-badge {
+    height: 100%;
+    width: auto;
 }
 
 /* Window Mockup */
