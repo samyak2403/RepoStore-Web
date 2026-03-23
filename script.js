@@ -169,4 +169,14 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(() => {
             document.getElementById('downloads-count').textContent = '—';
         });
+    // Click animation for feature cards
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.classList.add('clicked');
+            setTimeout(() => {
+                card.classList.remove('clicked');
+            }, 400); // match animation duration
+        });
+    });
 });
