@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - RepoStore</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .privacy-content {
+            padding: 120px 20px 80px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .privacy-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 32px;
+            color: var(--text-primary);
+        }
+
+        .privacy-content h2 {
+            font-size: 1.75rem;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .privacy-content h3 {
+            font-size: 1.25rem;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .privacy-content p,
+        .privacy-content li {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .privacy-content ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .privacy-content a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .privacy-content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scanned scrolled">
+        <div class="nav-container">
+            <a href="../index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    <img src="../icon.png" alt="RepoStore Logo" class="logo-img"> RepoStore
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html#features">Features</a></li>
+                <li><a href="../index.html#how-it-works">How It Works</a></li>
+                <li><a href="../index.html#developers">Developers</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="../index.html#download" class="btn btn-primary nav-download">Download</a>
+                <button class="menu-toggle icon-btn" id="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Privacy Policy Content -->
+    <main class="privacy-content">
+        <h1>Privacy Policy</h1>
+
+        <h2>TL;DR - The Short Version</h2>
+        <ul>
+            <li>✅ We collect NO personal data</li>
+            <li>✅ No analytics, no tracking, no ads</li>
+            <li>✅ All data stays on your device</li>
+            <li>✅ We don't operate servers that store your data</li>
+            <li>✅ 100% open source and auditable</li>
+        </ul>
+
+        <h2>Information We Collect</h2>
+        <h3>GitHub Authentication</h3>
+        <p>If you choose to use an API token with RepoStore:</p>
+        <ul>
+            <li>Your token is encrypted and stored locally on your device.</li>
+            <li>We never access private data, emails, or personal information.</li>
+            <li>The token is used solely to increase your GitHub API rate limit for discovering and installing apps.
+            </li>
+        </ul>
+
+        <h3>Local Data (Android Only)</h3>
+        <ul>
+            <li><strong>Installed Apps Database:</strong> We track apps you've installed via RepoStore to notify you of
+                updates.</li>
+            <li><strong>Preferences:</strong> Theme settings and basic configurations are stored locally.</li>
+            <li>All data remains on your device and is never transmitted to external servers.</li>
+        </ul>
+
+        <h2>What We DON'T Collect</h2>
+        <ul>
+            <li><strong>Personal Information:</strong> We do not collect names, email addresses, phone numbers, or any
+                identifying information.</li>
+            <li><strong>Usage Analytics:</strong> We do not track how you use the app, which buttons you click, or how
+                often you open it.</li>
+            <li><strong>Device Identifiers:</strong> We do not collect IMEI, advertising IDs, or MAC addresses.</li>
+            <li><strong>Crash Reports:</strong> We do not automatically collect crash logs or telemetry data.</li>
+        </ul>
+
+        <h2>How We Use Information</h2>
+        <p><strong>GitHub API Access:</strong> We make direct API calls to GitHub's servers to fetch repository and
+            release information. These requests go straight from your device to GitHub - we don't proxy or log them.</p>
+        <p><strong>Local Storage:</strong> The installed apps database and preferences are stored locally using standard
+            Android storage mechanisms. This data never leaves your device.</p>
+
+        <h2>Data Sharing</h2>
+        <p>We do not share your data with any third parties. Period.</p>
+        <p><strong>External Services:</strong></p>
+        <ul>
+            <li><strong>GitHub API:</strong> Direct communication with api.github.com (subject to <a
+                    href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement"
+                    target="_blank">GitHub's Privacy Policy</a>).</li>
+            <li><strong>No Other Services:</strong> No analytics, no advertising networks, no third-party SDKs.</li>
+        </ul>
+
+        <h2>Data Security</h2>
+        <ul>
+            <li>API tokens and sensitive data are safely managed by your device.</li>
+            <li>All network communication uses HTTPS.</li>
+            <li>No cloud storage or remote servers.</li>
+            <li>Open source code - fully auditable at <a href="https://github.com/samyak2403/RepoStore"
+                    target="_blank">github.com/samyak2403/RepoStore</a>.</li>
+        </ul>
+
+        <h2>Your Rights</h2>
+        <p>You have full control over your data:</p>
+        <ul>
+            <li><strong>Access:</strong> View all stored data through the app interface.</li>
+            <li><strong>Delete:</strong> Clear app data in Android Settings to instantly wipe all records.</li>
+            <li><strong>No Account Required:</strong> RepoStore works completely anonymously without signing in.</li>
+            <li><strong>Uninstall:</strong> Removes all local data permanently.</li>
+        </ul>
+
+        <h2>Android Permissions</h2>
+        <p>RepoStore requests these minimal permissions:</p>
+        <ul>
+            <li><strong>INTERNET:</strong> Fetch repository data from GitHub API.</li>
+            <li><strong>REQUEST_INSTALL_PACKAGES:</strong> Install downloaded APK files to your device.</li>
+            <li><strong>QUERY_ALL_PACKAGES / STORAGE:</strong> Detect installed apps for update notifications and to
+                safely direct APKs to storage.</li>
+        </ul>
+
+        <h2>Data Deletion</h2>
+        <p>To delete all RepoStore data from your device:</p>
+        <ol>
+            <li>Open Android Settings.</li>
+            <li>Navigate to Apps &rarr; RepoStore.</li>
+            <li>Tap "Clear Data" or uninstall the app.</li>
+        </ol>
+
+        <h2>Disclaimer</h2>
+        <p><strong>No Affiliation with GitHub, Inc.:</strong> RepoStore is an independent, open-source project not
+            affiliated with, endorsed by, or sponsored by GitHub, Inc. The name describes the app's functionality
+            (discovering GitHub releases) and does not imply trademark ownership or association with GitHub, Inc.</p>
+
+        <h2>Contact Us</h2>
+        <p>Questions about this Privacy Policy or our privacy practices?</p>
+        <p>
+            <a href="https://github.com/samyak2403/RepoStore" target="_blank"><i class="fa-brands fa-github"></i> GitHub
+                Repository</a><br>
+            <a href="https://github.com/samyak2403/RepoStore/issues" target="_blank"><i class="fa-solid fa-bug"></i>
+                Report Issue</a>
+        </p>
+        <p>Built with ❤️ by Samyak Kamble.</p>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="../icon.png" alt="RepoStore Logo" class="logo-img"> RepoStore
+                    </div>
+                    <p>The open source app store for GitHub releases on Android.</p>
+                    <p class="dev-credit">Developed by <a href="https://github.com/samyak2403" target="_blank"
+                            class="text-accent">Samyak Kamble</a></p>
+                </div>
+
+                <div class="footer-links-group">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/samyak2403/RepoStore">Source Code</a></li>
+                        <li><a href="https://github.com/samyak2403/RepoStore/wiki">Wiki</a></li>
+                        <li><a href="https://github.com/samyak2403/RepoStore/releases">Releases</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-group">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/samyak2403/RepoStore/issues">Submit Issue</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="mailto:contact@repostore.local">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 RepoStore. All rights reserved.</p>
+                <div class="social-icons">
+                    <a href="https://github.com/samyak2403/RepoStore" aria-label="GitHub"><i
+                            class="fa-brands fa-github"></i></a>
+                    <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../script.js"></script>
+</body>
+
+</html>
