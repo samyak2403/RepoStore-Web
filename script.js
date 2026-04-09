@@ -153,18 +153,37 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('forks-count').textContent = '—';
         });
 
-    // Fetch total downloads from all releases
+    // Fetch total downloads from all releases and latest APK url for QR code
     fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`)
         .then(res => res.json())
         .then(releases => {
             let totalDownloads = 0;
-            releases.forEach(release => {
+            let latestApkUrl = null;
+
+            releases.forEach((release, index) => {
                 release.assets.forEach(asset => {
                     totalDownloads += asset.download_count;
+                    if (index === 0 && asset.name.endsWith('.apk') && !latestApkUrl) {
+                        latestApkUrl = asset.browser_download_url;
+                    }
                 });
             });
             const downloadsEl = document.getElementById('downloads-count');
             animateCount(downloadsEl, totalDownloads);
+
+            if (latestApkUrl) {
+                const qrContainer = document.getElementById('apk-qrcode');
+                if (qrContainer) {
+                    new QRCode(qrContainer, {
+                        text: latestApkUrl,
+                        width: 128,
+                        height: 128,
+                        colorDark : "#000000",
+                        colorLight : "#ffffff",
+                        correctLevel : QRCode.CorrectLevel.L
+                    });
+                }
+            }
         })
         .catch(() => {
             document.getElementById('downloads-count').textContent = '—';

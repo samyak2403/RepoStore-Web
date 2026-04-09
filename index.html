@@ -91,20 +91,30 @@
                 </div>
             </div>
 
-            <div class="hero-buttons">
-                <a href="https://github.com/samyak2403/RepoStore/releases/latest" target="_blank"
-                    class="btn btn-primary btn-large">
-                    <i class="fa-solid fa-download"></i> Download Latest
-                </a>
-                <a href="https://f-droid.org/packages/com.samyak.repostore/" target="_blank" class="store-badge-link">
-                    <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" class="store-badge"
-                        style="transform: scale(1.25); transform-origin: center;">
-                </a>
-                <a href="https://apt.izzysoft.de/packages/com.samyak.repostore" target="_blank"
-                    class="store-badge-link">
-                    <img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png"
-                        alt="Get it at IzzyOnDroid" class="store-badge">
-                </a>
+            <div class="hero-actions" style="display: flex; flex-direction: column; align-items: center; gap: 2rem; margin-bottom: 64px;">
+                <div class="hero-buttons" style="margin-bottom: 0;">
+                    <a href="https://github.com/samyak2403/RepoStore/releases/latest" target="_blank"
+                        class="btn btn-primary btn-large">
+                        <i class="fa-solid fa-download"></i> Download Latest
+                    </a>
+                    <a href="https://f-droid.org/packages/com.samyak.repostore/" target="_blank" class="store-badge-link">
+                        <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" class="store-badge"
+                            style="transform: scale(1.25); transform-origin: center;">
+                    </a>
+                    <a href="https://apt.izzysoft.de/packages/com.samyak.repostore" target="_blank"
+                        class="store-badge-link">
+                        <img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png"
+                            alt="Get it at IzzyOnDroid" class="store-badge">
+                    </a>
+                </div>
+
+                <div class="qr-code-container animate-slide-up-delay" style="display: flex; flex-direction: row; align-items: center; gap: 1.2rem; background: var(--card-bg); padding: 12px 24px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-md);">
+                    <div id="apk-qrcode" style="background: white; padding: 6px; border-radius: 8px;"></div>
+                    <div style="text-align: left;">
+                        <h4 style="margin-bottom: 4px; font-size: 1.05rem;">Direct APK Download</h4>
+                        <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0; line-height: 1.4;">Scan with your phone to<br>download the app directly.</p>
+                    </div>
+                </div>
             </div>
 
             <div class="hero-visual animate-slide-up-delay-2">
@@ -345,6 +355,7 @@
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="script.js"></script>
     <script src="https://keepandroidopen.org/banner.js?size=minimal&animation=off&id=my-banner"></script>
 </body>
