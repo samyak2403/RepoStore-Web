@@ -3,6 +3,7 @@
 :root {
     /* Colors - Light Theme */
     --bg-primary: #ffffff;
+    --bg-primary-rgb: 255, 255, 255;
     --bg-secondary: #f4f4f5;
     /* Subtle gray like zin-100 */
     --text-primary: #18181b;
@@ -27,6 +28,7 @@
 [data-theme="dark"] {
     /* Colors - Dark Theme */
     --bg-primary: #09090b;
+    --bg-primary-rgb: 9, 9, 11;
     --bg-secondary: #18181b;
     --text-primary: #fafafa;
     --text-secondary: #a1a1aa;
@@ -235,7 +237,7 @@ h4 {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(var(--bg-primary), 0.85);
+    background-color: rgba(var(--bg-primary-rgb), 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     z-index: 1000;
@@ -299,7 +301,6 @@ h4 {
 }
 
 .mobile-menu {
-    display: none;
     position: absolute;
     top: 100%;
     left: 0;
@@ -309,15 +310,17 @@ h4 {
     padding: 16px 24px;
     opacity: 0;
     transform: translateY(-10px);
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
     pointer-events: none;
+    visibility: hidden;
+    box-shadow: var(--shadow-lg);
 }
 
 .mobile-menu.active {
-    display: block;
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+    visibility: visible;
 }
 
 .mobile-menu ul {
@@ -337,6 +340,13 @@ h4 {
 .mobile-menu a:last-child {
     border-bottom: none;
     padding-bottom: 0;
+}
+
+/* Mobile menu download button - ensure visibility in all themes */
+.mobile-menu .btn-primary {
+    color: var(--bg-primary) !important;
+    background-color: var(--accent-secondary);
+    border-bottom: none !important;
 }
 
 /* Hero Section */
@@ -547,20 +557,172 @@ h4 {
 .store-badge-link {
     display: flex;
     align-items: center;
-    height: 70px;
-    /* Exactly matches actual explicit height of .btn-large */
-    transition: transform var(--transition);
+    justify-content: center;
+    height: 80px;
+    transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
 }
 
 .store-badge-link:hover {
-    transform: translateY(-2px);
-    opacity: 0.95;
+    transform: translateY(-3px) scale(1.05);
+    filter: brightness(1.1);
+    opacity: 1;
 }
 
 .store-badge {
-    height: 100%;
+    height: 80px;
     width: auto;
     object-fit: contain;
+    border-radius: 12px;
+}
+
+/* Phone Mockup */
+.device-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.phone-mockup-link {
+    text-decoration: none;
+    display: block;
+}
+
+.phone-mockup {
+    position: relative;
+    width: 300px;
+    height: 640px;
+    border-radius: 40px;
+    background: #000;
+    border: 12px solid #1a1a1a;
+    box-shadow: 
+        0 0 0 2px var(--border-color),
+        0 20px 60px -10px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(37, 99, 235, 0.2);
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.phone-mockup:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 0 0 2px var(--accent-primary),
+        0 30px 70px -15px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(37, 99, 235, 0.3);
+}
+
+.phone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 25px;
+    background: #1a1a1a;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    z-index: 10;
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    overflow: hidden;
+    position: relative;
+    border-radius: 28px;
+}
+
+.phone-screenshots-track {
+    display: flex;
+    flex-direction: column;
+    animation: scrollScreenshots 15s linear infinite;
+    width: 100%;
+}
+
+.phone-screenshots-track img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.phone-home-bar {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    z-index: 10;
+}
+
+.play-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 20;
+    border-radius: 28px;
+}
+
+.phone-mockup:hover .play-overlay {
+    opacity: 1;
+}
+
+.play-button {
+    width: 64px;
+    height: 64px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    margin-bottom: 16px;
+    padding-left: 4px;
+    transition: transform 0.2s ease;
+}
+
+.phone-mockup:hover .play-button {
+    transform: scale(1.1);
+}
+
+.play-overlay span {
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes scrollScreenshots {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(calc(-100% + 640px)); }
+}
+
+.preview-label {
+    margin-top: 24px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: blink 2s ease-in-out infinite;
 }
 
 /* Window Mockup */
@@ -1202,6 +1364,16 @@ h4 {
         overflow: hidden;
     }
 
+    .device-frame iframe {
+        width: 260px;
+        height: 560px;
+    }
+
+    .phone-mockup {
+        width: 260px;
+        height: 560px;
+    }
+
     .hero-title {
         font-size: clamp(2rem, 8vw, 3.5rem);
         word-break: break-word;
@@ -1276,6 +1448,26 @@ h4 {
         height: 48px;
         font-size: 0.95rem;
         padding: 0 20px;
+    }
+
+    /* QR code container */
+    .qr-code-container {
+        flex-direction: column !important;
+        text-align: center !important;
+        padding: 16px !important;
+        max-width: 280px;
+        width: 100%;
+    }
+
+    .qr-code-container div[style*="text-align: left"] {
+        text-align: center !important;
+    }
+
+    /* Hero actions */
+    .hero-actions {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
     }
 
     /* App window mockup */
