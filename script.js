@@ -238,14 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
         contributors.forEach((c, i) => track.appendChild(buildContributorCard(c, i)));
     }
 
-    const fallbackContributors = [
-        { login: 'samyak2403', avatar_url: 'https://avatars.githubusercontent.com/u/74384594?v=4', html_url: 'https://github.com/samyak2403' },
-        { login: 'SubhrajyotiSen', avatar_url: 'https://avatars.githubusercontent.com/u/61483842?v=4', html_url: 'https://github.com/SubhrajyotiSen' },
-        { login: 'Crazy-1004', avatar_url: 'https://avatars.githubusercontent.com/u/101292928?v=4', html_url: 'https://github.com/Crazy-1004' },
-        { login: 'Samyak-Kamble', avatar_url: 'https://avatars.githubusercontent.com/u/103328108?v=4', html_url: 'https://github.com/Samyak-Kamble' },
-        { login: 'Tushar-Kamble-1', avatar_url: 'https://avatars.githubusercontent.com/u/103328109?v=4', html_url: 'https://github.com/Tushar-Kamble-1' }
-    ];
-
     fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=100`)
         .then(res => {
             if (!res.ok) throw new Error('API rate limit or network error');
@@ -255,13 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Array.isArray(contributors) && contributors.length > 0) {
                 const realContributors = contributors.filter(c => c.type === 'User');
                 populateMarquee(realContributors);
-            } else {
-                populateMarquee(fallbackContributors);
             }
         })
         .catch(err => {
-            console.warn('Could not fetch contributors, using fallback:', err);
-            populateMarquee(fallbackContributors);
+            console.warn('Could not fetch contributors:', err);
         });
 
 });
