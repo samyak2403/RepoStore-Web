@@ -141,16 +141,16 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             const starsEl = document.getElementById('stars-count');
             const forksEl = document.getElementById('forks-count');
-            if (data.stargazers_count !== undefined) {
+            if (starsEl && data.stargazers_count !== undefined) {
                 animateCount(starsEl, data.stargazers_count);
             }
-            if (data.forks_count !== undefined) {
+            if (forksEl && data.forks_count !== undefined) {
                 animateCount(forksEl, data.forks_count);
             }
         })
         .catch(() => {
-            document.getElementById('stars-count').textContent = '300+';
-            document.getElementById('forks-count').textContent = '—';
+            const s = document.getElementById('stars-count'); if(s) s.textContent = '300+';
+            const f = document.getElementById('forks-count'); if(f) f.textContent = '—';
         });
 
     // Fetch total downloads from all releases and latest APK url for QR code
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
             const downloadsEl = document.getElementById('downloads-count');
-            animateCount(downloadsEl, totalDownloads);
+            if (downloadsEl) animateCount(downloadsEl, totalDownloads);
 
             if (latestApkUrl) {
                 const qrContainer = document.getElementById('apk-qrcode');
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .catch(() => {
-            document.getElementById('downloads-count').textContent = '—';
+            const d = document.getElementById('downloads-count'); if(d) d.textContent = '—';
         });
     // Click animation for feature cards
     const featureCards = document.querySelectorAll('.feature-card');

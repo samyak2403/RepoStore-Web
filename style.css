@@ -1739,3 +1739,95 @@ h4 {
     .contributor-card { min-width: 64px; gap: 6px; }
     .marquee-track { gap: 16px; }
 }
+
+/* ==========================================
+   Statistics Page Styles
+   ========================================== */
+.stats-section { padding-top: 120px; padding-bottom: 60px; min-height: 80vh; }
+.chart-container { position: relative; width: 100%; height: 400px; max-width: 900px; margin: 40px auto; background: var(--card-bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-md); }
+.stats-header { text-align: center; margin-bottom: 32px; }
+.stats-header h1 { font-size: 2.5rem; margin-bottom: 16px; }
+.stats-header p { color: var(--text-secondary); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+.stats-summary {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+.summary-card {
+    background: var(--card-bg);
+    padding: 24px 40px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    min-width: 200px;
+}
+.summary-card h3 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+.summary-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+@media (max-width: 480px) {
+    .summary-card { padding: 16px 24px; min-width: 150px; }
+    .summary-value { font-size: 1.8rem; }
+}
+
+/* ==========================================
+   Glowing Games Nav Link
+   ========================================== */
+.nav-games-link {
+    background: linear-gradient(135deg, #a855f7, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800 !important;
+    position: relative;
+    transition: all 0.3s ease;
+    animation: multiGlow 2s infinite alternate;
+}
+
+.nav-games-link:hover {
+    filter: brightness(1.2);
+    transform: translateY(-1px);
+}
+
+@keyframes multiGlow {
+    0% {
+        filter: drop-shadow(0 0 2px rgba(168, 85, 247, 0.4));
+    }
+    100% {
+        filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 12px rgba(59, 130, 246, 0.6));
+    }
+}
+
+/* ==========================================
+   New Tag Styles
+   ========================================== */
+.new-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #ef4444, #f59e0b);
+    color: white !important;
+    font-size: 0.6rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 5px;
+    vertical-align: middle;
+    -webkit-text-fill-color: white !important;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+    animation: tagPulse 1.5s infinite;
+}
+
+@keyframes tagPulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}

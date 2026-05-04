@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoStore - Statistics</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <link rel="apple-touch-icon" href="images/icon.png">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;">
+                    <img src="images/icon.png" alt="RepoStore Logo" class="logo-img"> RepoStore
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li><a href="index.html#developers">Developers</a></li>
+                <li><a href="stats.html">Stats</a></li>
+                <li><a href="games.html" class="nav-games-link">Games <span class="new-tag">NEW</span></a></li>
+                <li><a href="index.html#contributors">Contributors</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="https://github.com/samyak2403/RepoStore" target="_blank" class="icon-btn" aria-label="GitHub Repository">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="index.html#download" class="btn btn-primary nav-download">Download</a>
+                <button class="menu-toggle icon-btn" id="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li><a href="index.html#developers">Developers</a></li>
+                <li><a href="stats.html">Stats</a></li>
+                <li><a href="games.html" class="nav-games-link">Games <span class="new-tag">NEW</span></a></li>
+                <li><a href="index.html#download" class="btn btn-primary"
+                        style="display: inline-block; text-align: center; width: 100%;">Download Latest</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-header reveal animate-slide-up">
+                <h1>Download <span class="text-gradient">Statistics</span></h1>
+                <p>Track the growth of RepoStore across all our releases. Data is fetched directly from the GitHub API, showing the total downloads per release alongside their publication date (Day, Month, Year).</p>
+            </div>
+            
+            <div class="stats-summary reveal animate-slide-up-delay">
+                <div class="summary-card">
+                    <h3>Total Downloads</h3>
+                    <div class="summary-value" id="total-downloads-val">0</div>
+                </div>
+            </div>
+
+            <div class="chart-container reveal animate-slide-up-delay">
+                <canvas id="downloadsChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="images/icon.png" alt="RepoStore Logo" class="logo-img"> RepoStore
+                    </div>
+                    <p>The open source app store for GitHub releases on Android.</p>
+                    <p class="dev-credit">Developed by <a href="https://github.com/samyak2403" target="_blank"
+                            class="text-accent">Samyak Kamble</a></p>
+                </div>
+
+                <div class="footer-links-group">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/samyak2403/RepoStore">Source Code</a></li>
+                        <li><a href="https://github.com/samyak2403/RepoStore/wiki">Wiki</a></li>
+                        <li><a href="https://github.com/samyak2403/RepoStore/releases">Releases</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-group">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/samyak2403/RepoStore/issues">Submit Issue</a></li>
+                        <li><a href="privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="mailto:samyakkamble6659@gmail.com">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 RepoStore. All rights reserved.</p>
+                <div class="social-icons">
+                    <a href="https://github.com/samyak2403/RepoStore" aria-label="GitHub"><i
+                            class="fa-brands fa-github"></i></a>
+                    <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="stats.js"></script>
+</body>
+
+</html>
