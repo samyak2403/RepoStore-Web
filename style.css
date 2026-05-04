@@ -1635,3 +1635,107 @@ h4 {
         font-size: 0.85rem;
     }
 }
+
+/* ==========================================
+   Contributors Marquee Section
+   ========================================== */
+.contributors {
+    position: relative;
+    overflow: hidden;
+}
+.contributors-marquee-wrapper {
+    position: relative;
+    margin-bottom: 48px;
+}
+.contributors-marquee {
+    overflow: hidden;
+    position: relative;
+    padding: 40px 0;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.marquee-track {
+    display: flex;
+    gap: 32px;
+    width: max-content;
+    animation: marqueeScroll 20s linear infinite;
+}
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+@keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.contributor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    min-width: 100px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+.contributor-avatar-wrapper {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    padding: 3px;
+    background: transparent;
+    transition: transform 0.3s ease;
+}
+.contributor-card:hover .contributor-avatar-wrapper {
+    transform: scale(1.05);
+}
+.contributor-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 2px solid var(--bg-primary);
+    background-color: var(--bg-secondary);
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+.contributor-card:hover .contributor-avatar {
+    filter: grayscale(0%);
+}
+.contributor-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: center;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+.contributor-card:hover .contributor-name {
+    color: var(--text-primary);
+}
+.contributors-cta {
+    margin-top: 16px;
+}
+.contributors-cta .btn {
+    gap: 10px;
+}
+@media (max-width: 992px) {
+    .contributor-avatar-wrapper { width: 64px; height: 64px; }
+    .marquee-track { gap: 28px; }
+}
+@media (max-width: 768px) {
+    .contributor-avatar-wrapper { width: 56px; height: 56px; }
+    .contributor-name { font-size: 0.7rem; max-width: 80px; }
+    .contributor-card { min-width: 80px; gap: 8px; }
+    .marquee-track { gap: 20px; }
+    .contributors-marquee { padding: 28px 0; }
+}
+@media (max-width: 480px) {
+    .contributor-avatar-wrapper { width: 48px; height: 48px; }
+    .contributor-card { min-width: 64px; gap: 6px; }
+    .marquee-track { gap: 16px; }
+}
