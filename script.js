@@ -44,25 +44,28 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = mobileMenuBtn.querySelector('i');
 
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('active');
-        if (mobileMenu.classList.contains('active')) {
-            menuIcon.classList.replace('fa-bars', 'fa-xmark');
-        } else {
-            menuIcon.classList.replace('fa-xmark', 'fa-bars');
-        }
-    });
+    if (mobileMenuBtn && mobileMenu) {
+        const menuIcon = mobileMenuBtn.querySelector('i');
 
-    // Close mobile menu on link click
-    const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            menuIcon.classList.replace('fa-xmark', 'fa-bars');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            if (mobileMenu.classList.contains('active')) {
+                menuIcon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            }
         });
-    });
+
+        // Close mobile menu on link click
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            });
+        });
+    }
 
     /**
      * Navbar scroll effect
@@ -216,16 +219,29 @@ document.addEventListener('DOMContentLoaded', () => {
         card.href = contributor.html_url;
         card.target = '_blank';
         card.rel = 'noopener noreferrer';
-        card.setAttribute('aria-label', `View ${contributor.login}'s GitHub profile`);
+        card.setAttribute('aria-label', 'View ' + contributor.login + '\'s GitHub profile');
 
         const gradient = ringGradients[index % ringGradients.length];
 
-        card.innerHTML = `
-            <div class="contributor-avatar-wrapper" style="background: ${gradient};">
-                <img class="contributor-avatar" src="${contributor.avatar_url}&s=150" alt="${contributor.login}" loading="lazy">
-            </div>
-            <span class="contributor-name">${contributor.login}</span>
-        `;
+        // Use safe DOM methods instead of innerHTML to prevent XSS
+        const avatarWrapper = document.createElement('div');
+        avatarWrapper.className = 'contributor-avatar-wrapper';
+        avatarWrapper.style.background = gradient;
+
+        const avatarImg = document.createElement('img');
+        avatarImg.className = 'contributor-avatar';
+        avatarImg.src = contributor.avatar_url + '&s=150';
+        avatarImg.alt = contributor.login;
+        avatarImg.loading = 'lazy';
+        avatarWrapper.appendChild(avatarImg);
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'contributor-name';
+        nameSpan.textContent = contributor.login;
+
+        card.appendChild(avatarWrapper);
+        card.appendChild(nameSpan);
+
         return card;
     }
 
