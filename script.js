@@ -44,25 +44,28 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = mobileMenuBtn.querySelector('i');
 
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('active');
-        if (mobileMenu.classList.contains('active')) {
-            menuIcon.classList.replace('fa-bars', 'fa-xmark');
-        } else {
-            menuIcon.classList.replace('fa-xmark', 'fa-bars');
-        }
-    });
+    if (mobileMenuBtn && mobileMenu) {
+        const menuIcon = mobileMenuBtn.querySelector('i');
 
-    // Close mobile menu on link click
-    const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            menuIcon.classList.replace('fa-xmark', 'fa-bars');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            if (mobileMenu.classList.contains('active')) {
+                menuIcon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            }
         });
-    });
+
+        // Close mobile menu on link click
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            });
+        });
+    }
 
     /**
      * Navbar scroll effect
@@ -114,6 +117,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return num.toString();
     }
 
+    // Load a downloads count from a local stats file, falling back to a
+    // built-in value if the file can't be read (e.g. opened via file://).
+    function loadLocalDownloads(url, fallback) {
+        return fetch(url, { cache: 'no-cache' })
+            .then(res => (res.ok ? res.json() : Promise.reject(new Error('not ok'))))
+            .then(data => {
+                const n = Number(data.downloads);
+                return Number.isFinite(n) ? n : fallback;
+            })
+            .catch(() => fallback);
+    }
+
     function animateCount(element, target) {
         const duration = 1200;
         const start = 0;
@@ -153,41 +168,57 @@ document.addEventListener('DOMContentLoaded', () => {
             const f = document.getElementById('forks-count'); if(f) f.textContent = '—';
         });
 
-    // Fetch total downloads from all releases and latest APK url for QR code
-    fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`)
-        .then(res => res.json())
-        .then(releases => {
-            let totalDownloads = 0;
-            let latestApkUrl = null;
+    // Fallback download counts (kept roughly in sync with data/*.json). Used
+    // only when the local stat files can't be loaded.
+    const FDROID_FALLBACK_COUNT = 46135;
+    const IZZY_FALLBACK_COUNT = 38932;
 
-            releases.forEach((release, index) => {
-                release.assets.forEach(asset => {
-                    totalDownloads += asset.download_count;
-                    if (index === 0 && asset.name.endsWith('.apk') && !latestApkUrl) {
-                        latestApkUrl = asset.browser_download_url;
-                    }
-                });
-            });
-            const downloadsEl = document.getElementById('downloads-count');
-            if (downloadsEl) animateCount(downloadsEl, totalDownloads);
+    // Fetch GitHub release downloads (and the latest APK url for the QR code).
+    // Returns the GitHub download total; resolves to 0 if the request fails.
+    function getGithubDownloads() {
+        return fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`)
+            .then(res => res.json())
+            .then(releases => {
+                let githubDownloads = 0;
+                let latestApkUrl = null;
 
-            if (latestApkUrl) {
-                const qrContainer = document.getElementById('apk-qrcode');
-                if (qrContainer) {
-                    new QRCode(qrContainer, {
-                        text: latestApkUrl,
-                        width: 128,
-                        height: 128,
-                        colorDark : "#000000",
-                        colorLight : "#ffffff",
-                        correctLevel : QRCode.CorrectLevel.L
+                releases.forEach((release, index) => {
+                    release.assets.forEach(asset => {
+                        githubDownloads += asset.download_count;
+                        if (index === 0 && asset.name.endsWith('.apk') && !latestApkUrl) {
+                            latestApkUrl = asset.browser_download_url;
+                        }
                     });
+                });
+
+                if (latestApkUrl) {
+                    const qrContainer = document.getElementById('apk-qrcode');
+                    if (qrContainer) {
+                        new QRCode(qrContainer, {
+                            text: latestApkUrl,
+                            width: 128,
+                            height: 128,
+                            colorDark : "#000000",
+                            colorLight : "#ffffff",
+                            correctLevel : QRCode.CorrectLevel.L
+                        });
+                    }
                 }
-            }
-        })
-        .catch(() => {
-            const d = document.getElementById('downloads-count'); if(d) d.textContent = '—';
-        });
+
+                return githubDownloads;
+            })
+            .catch(() => 0);
+    }
+
+    // Combined total = GitHub + F-Droid + IzzyOnDroid downloads.
+    Promise.all([
+        getGithubDownloads(),
+        loadLocalDownloads('data/fdroid-stats.json', FDROID_FALLBACK_COUNT),
+        loadLocalDownloads('data/izzy-stats.json', IZZY_FALLBACK_COUNT)
+    ]).then(([github, fdroid, izzy]) => {
+        const downloadsEl = document.getElementById('downloads-count');
+        if (downloadsEl) animateCount(downloadsEl, github + fdroid + izzy);
+    });
     // Click animation for feature cards
     const featureCards = document.querySelectorAll('.feature-card');
     featureCards.forEach(card => {
@@ -216,16 +247,29 @@ document.addEventListener('DOMContentLoaded', () => {
         card.href = contributor.html_url;
         card.target = '_blank';
         card.rel = 'noopener noreferrer';
-        card.setAttribute('aria-label', `View ${contributor.login}'s GitHub profile`);
+        card.setAttribute('aria-label', 'View ' + contributor.login + '\'s GitHub profile');
 
         const gradient = ringGradients[index % ringGradients.length];
 
-        card.innerHTML = `
-            <div class="contributor-avatar-wrapper" style="background: ${gradient};">
-                <img class="contributor-avatar" src="${contributor.avatar_url}&s=150" alt="${contributor.login}" loading="lazy">
-            </div>
-            <span class="contributor-name">${contributor.login}</span>
-        `;
+        // Use safe DOM methods instead of innerHTML to prevent XSS
+        const avatarWrapper = document.createElement('div');
+        avatarWrapper.className = 'contributor-avatar-wrapper';
+        avatarWrapper.style.background = gradient;
+
+        const avatarImg = document.createElement('img');
+        avatarImg.className = 'contributor-avatar';
+        avatarImg.src = contributor.avatar_url + '&s=150';
+        avatarImg.alt = contributor.login;
+        avatarImg.loading = 'lazy';
+        avatarWrapper.appendChild(avatarImg);
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'contributor-name';
+        nameSpan.textContent = contributor.login;
+
+        card.appendChild(avatarWrapper);
+        card.appendChild(nameSpan);
+
         return card;
     }
 

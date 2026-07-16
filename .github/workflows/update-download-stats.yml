@@ -1,0 +1,60 @@
+name: Update Download Stats
+
+on:
+  schedule:
+    # Runs daily at 06:00 UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+env:
+  PACKAGE: com.samyak.repostore
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update IzzyOnDroid download count
+        run: |
+          set -e
+          URL="https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/yearly/rolling.json"
+          COUNT=$(curl -sSf "$URL" | jq --arg pkg "$PACKAGE" '.[$pkg]')
+          if [ -z "$COUNT" ] || [ "$COUNT" = "null" ]; then
+            echo "Could not read IzzyOnDroid count for $PACKAGE; leaving existing value."
+          else
+            DATE=$(date -u +%Y-%m-%d)
+            mkdir -p data
+            printf '{\n  "package": "%s",\n  "downloads": %s,\n  "updated": "%s"\n}\n' "$PACKAGE" "$COUNT" "$DATE" > data/izzy-stats.json
+            cat data/izzy-stats.json
+          fi
+
+      - name: Update F-Droid total download count
+        run: |
+          set -e
+          URL="https://raw.githubusercontent.com/kitswas/fdroid-metrics-dashboard/main/processed/total/${PACKAGE}.json"
+          COUNT=$(curl -sSf "$URL" | jq '.total_downloads')
+          if [ -z "$COUNT" ] || [ "$COUNT" = "null" ]; then
+            echo "Could not read F-Droid count for $PACKAGE; leaving existing value."
+          else
+            DATE=$(date -u +%Y-%m-%d)
+            mkdir -p data
+            printf '{\n  "package": "%s",\n  "downloads": %s,\n  "period": "total",\n  "updated": "%s"\n}\n' "$PACKAGE" "$COUNT" "$DATE" > data/fdroid-stats.json
+            cat data/fdroid-stats.json
+          fi
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/izzy-stats.json data/fdroid-stats.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: update download stats"
+            git push
+          fi

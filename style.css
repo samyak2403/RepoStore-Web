@@ -1776,58 +1776,140 @@ h4 {
     font-weight: 800;
     color: var(--text-primary);
 }
+.summary-card .text-accent {
+    display: inline-block;
+    margin-top: 8px;
+}
+.summary-caption {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
 @media (max-width: 480px) {
     .summary-card { padding: 16px 24px; min-width: 150px; }
     .summary-value { font-size: 1.8rem; }
 }
 
 /* ==========================================
-   Glowing Games Nav Link
+   Developer Docs Page
    ========================================== */
-.nav-games-link {
-    background: linear-gradient(135deg, #a855f7, #3b82f6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 800 !important;
-    position: relative;
-    transition: all 0.3s ease;
-    animation: multiGlow 2s infinite alternate;
+.docs-section { padding-top: 120px; padding-bottom: 60px; }
+.docs-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+    align-items: start;
+}
+.docs-sidebar {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+}
+.docs-sidebar-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+.docs-sidebar ul { list-style: none; padding: 0; margin: 0; }
+.docs-sidebar li { margin-bottom: 8px; }
+.docs-sidebar a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+.docs-sidebar a:hover { color: var(--primary-color, #3b82f6); }
+
+.docs-header { margin-bottom: 40px; }
+.docs-header h1 { font-size: 2.5rem; margin-bottom: 12px; }
+.docs-header p { color: var(--text-secondary); max-width: 640px; line-height: 1.7; }
+
+.docs-block { margin-bottom: 48px; scroll-margin-top: 100px; }
+.docs-block h2 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.docs-block h2 i { color: var(--primary-color, #3b82f6); }
+.docs-block h3 { font-size: 1.1rem; margin-bottom: 6px; }
+.docs-block p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; }
+.docs-block a.text-accent { text-decoration: none; }
+
+.docs-checklist { list-style: none; padding: 0; margin: 0; }
+.docs-checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+.docs-checklist li i { color: #10b981; margin-top: 4px; }
+.docs-checklist strong { color: var(--text-primary); }
+
+.docs-step {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.docs-step:last-child { border-bottom: none; }
+.docs-step-num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary-color, #3b82f6);
+    color: #fff;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.nav-games-link:hover {
-    filter: brightness(1.2);
-    transform: translateY(-1px);
+.docs-note {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
 }
+.docs-note i { color: #f59e0b; margin-right: 6px; }
 
-@keyframes multiGlow {
-    0% {
-        filter: drop-shadow(0 0 2px rgba(168, 85, 247, 0.4));
-    }
-    100% {
-        filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 12px rgba(59, 130, 246, 0.6));
-    }
+.docs-code {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 18px 20px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
 }
-
-/* ==========================================
-   New Tag Styles
-   ========================================== */
-.new-tag {
-    display: inline-block;
-    background: linear-gradient(135deg, #ef4444, #f59e0b);
-    color: white !important;
-    font-size: 0.6rem;
-    font-weight: 800;
-    padding: 2px 6px;
+.docs-code code {
+    font-family: 'Consolas', 'Menlo', 'Courier New', monospace;
+    color: var(--text-primary);
+    white-space: pre;
+}
+.docs-block code {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
-    margin-left: 5px;
-    vertical-align: middle;
-    -webkit-text-fill-color: white !important;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
-    animation: tagPulse 1.5s infinite;
+    padding: 1px 6px;
+    font-family: 'Consolas', 'Menlo', 'Courier New', monospace;
+    font-size: 0.88em;
 }
+.docs-code code { border: none; background: none; padding: 0; }
 
-@keyframes tagPulse {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 1; }
+.docs-faq { margin-bottom: 20px; }
+.docs-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; }
+
+@media (max-width: 860px) {
+    .docs-layout { grid-template-columns: 1fr; gap: 24px; }
+    .docs-sidebar { position: static; }
+    .docs-header h1 { font-size: 2rem; }
 }
