@@ -33,7 +33,7 @@
             <ul class="nav-links">
                 <li><a href="index.html#features">Features</a></li>
                 <li><a href="index.html#how-it-works">How It Works</a></li>
-                <li><a href="index.html#developers">Developers</a></li>
+                <li><a href="docs.html">Docs</a></li>
                 <li><a href="stats.html">Stats</a></li>
                 <li><a href="index.html#contributors">Contributors</a></li>
             </ul>
@@ -56,7 +56,7 @@
             <ul>
                 <li><a href="index.html#features">Features</a></li>
                 <li><a href="index.html#how-it-works">How It Works</a></li>
-                <li><a href="index.html#developers">Developers</a></li>
+                <li><a href="docs.html">Docs</a></li>
                 <li><a href="stats.html">Stats</a></li>
                 <li><a href="index.html#contributors">Contributors</a></li>
                 <li><a href="index.html#download" class="btn btn-primary"
@@ -75,13 +75,27 @@
             
             <div class="stats-summary animate-slide-up-delay">
                 <div class="summary-card">
-                    <h3>Total Downloads</h3>
+                    <h3>GitHub Downloads</h3>
                     <div class="summary-value" id="total-downloads-val">0</div>
+                </div>
+                <div class="summary-card">
+                    <h3><i class="fa-brands fa-android" style="color: #3DDC84;"></i> IzzyOnDroid Downloads</h3>
+                    <div class="summary-value" id="izzy-downloads-val">0</div>
+                    <a href="https://apt.izzysoft.de/packages/com.samyak.repostore" target="_blank" class="text-accent" style="font-size: 0.85rem; text-decoration: none;">View on IzzyOnDroid</a>
+                </div>
+                <div class="summary-card">
+                    <h3><i class="fa-solid fa-cube" style="color: #1976d2;"></i> F-Droid Downloads</h3>
+                    <div class="summary-value" id="fdroid-downloads-val">0</div>
+                    <a href="https://f-droid.org/packages/com.samyak.repostore" target="_blank" class="text-accent" style="font-size: 0.85rem; text-decoration: none;">View on F-Droid</a>
                 </div>
             </div>
 
             <div class="chart-container reveal">
                 <canvas id="downloadsChart"></canvas>
+            </div>
+
+            <div class="chart-container reveal">
+                <canvas id="platformChart"></canvas>
             </div>
         </div>
     </section>

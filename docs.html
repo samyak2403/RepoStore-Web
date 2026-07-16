@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Developer docs for RepoStore: how to publish your Android app so it appears in RepoStore, with a README and screenshots folder, using samyak2403/TODOApp as an example.">
+    <title>RepoStore - Developer Docs</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <link rel="apple-touch-icon" href="images/icon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;">
+                    <img src="images/icon.png" alt="RepoStore Logo" class="logo-img"> RepoStore
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li><a href="docs.html">Docs</a></li>
+                <li><a href="stats.html">Stats</a></li>
+                <li><a href="index.html#contributors">Contributors</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="https://github.com/samyak2403/RepoStore" target="_blank" class="icon-btn" aria-label="GitHub Repository">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="index.html#download" class="btn btn-primary nav-download">Download</a>
+                <button class="menu-toggle icon-btn" id="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li><a href="docs.html">Docs</a></li>
+                <li><a href="stats.html">Stats</a></li>
+                <li><a href="index.html#contributors">Contributors</a></li>
+                <li><a href="index.html#download" class="btn btn-primary"
+                        style="display: inline-block; text-align: center; width: 100%;">Download Latest</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <section class="docs-section">
+        <div class="container docs-layout">
+            <!-- Sidebar -->
+            <aside class="docs-sidebar">
+                <p class="docs-sidebar-title">On this page</p>
+                <ul>
+                    <li><a href="#intro">How apps appear</a></li>
+                    <li><a href="#requirements">Requirements</a></li>
+                    <li><a href="#steps">Add your app</a></li>
+                    <li><a href="#structure">Repo structure</a></li>
+                    <li><a href="#readme">README template</a></li>
+                    <li><a href="#example">Example: TODOApp</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main docs -->
+            <div class="docs-content">
+                <div class="docs-header reveal animate-slide-up">
+                    <h1>Developer <span class="text-gradient">Docs</span></h1>
+                    <p>How to publish your Android app so it shows up in RepoStore. No submission form, no manual review &mdash; just a public GitHub repo set up the right way.</p>
+                </div>
+
+                <section id="intro" class="docs-block reveal">
+                    <h2><i class="fa-solid fa-circle-info"></i> How apps appear in RepoStore</h2>
+                    <p>RepoStore discovers apps automatically through the public GitHub Search API. There is no private index and no manual curation. If your repository is public, ships an APK in its latest release, and is discoverable by search, RepoStore can find it and show it like a Play Store listing &mdash; with your README as the description and your screenshots in a gallery.</p>
+                </section>
+
+                <section id="requirements" class="docs-block reveal">
+                    <h2><i class="fa-solid fa-list-check"></i> Requirements</h2>
+                    <ul class="docs-checklist">
+                        <li><i class="fa-solid fa-check"></i> <strong>Public repository</strong> on GitHub (visibility must be <code>public</code>).</li>
+                        <li><i class="fa-solid fa-check"></i> <strong>At least one published release</strong> (a real GitHub Release, not just a tag).</li>
+                        <li><i class="fa-solid fa-check"></i> The latest release <strong>is not a draft or prerelease</strong>.</li>
+                        <li><i class="fa-solid fa-check"></i> The latest release contains <strong>at least one <code>.apk</code> asset</strong> (auto-generated source zips are ignored).</li>
+                        <li><i class="fa-solid fa-check"></i> A <strong><code>README.md</code></strong> at the repo root (rendered as &ldquo;About this app&rdquo;).</li>
+                        <li><i class="fa-solid fa-check"></i> A <strong><code>screenshots/</code></strong> folder with image files (shown in the gallery).</li>
+                        <li><i class="fa-solid fa-check"></i> Helpful <strong>topics</strong> like <code>android</code>, <code>mobile</code>, <code>apk</code> for discovery.</li>
+                    </ul>
+                </section>
+
+                <section id="steps" class="docs-block reveal">
+                    <h2><i class="fa-solid fa-list-ol"></i> Add your app step by step</h2>
+
+                    <div class="docs-step">
+                        <span class="docs-step-num">1</span>
+                        <div>
+                            <h3>Make your repo public</h3>
+                            <p>Push your Android project to a public GitHub repository. Add a clear description and topics (<code>android</code>, <code>apk</code>, plus your app category) so search can find it.</p>
+                        </div>
+                    </div>
+
+                    <div class="docs-step">
+                        <span class="docs-step-num">2</span>
+                        <div>
+                            <h3>Publish a release with your APK</h3>
+                            <p>Go to <strong>Releases &rarr; Draft a new release</strong>, create a tag (e.g. <code>v1.0.0</code>), write release notes, and upload your signed <code>.apk</code> as an asset. Publish it (not as a draft or prerelease).</p>
+                            <p class="docs-note"><i class="fa-solid fa-lightbulb"></i> RepoStore always installs from your <strong>latest published release</strong>, so keep new versions coming as new releases.</p>
+                        </div>
+                    </div>
+
+                    <div class="docs-step">
+                        <span class="docs-step-num">3</span>
+                        <div>
+                            <h3>Add a README.md</h3>
+                            <p>Place a <code>README.md</code> at the repo root. RepoStore renders it as the &ldquo;About this app&rdquo; section, so describe what the app does and list its features. See the <a href="#readme">template below</a>.</p>
+                        </div>
+                    </div>
+
+                    <div class="docs-step">
+                        <span class="docs-step-num">4</span>
+                        <div>
+                            <h3>Create a <code>screenshots/</code> folder</h3>
+                            <p>Add a folder named <code>screenshots/</code> at the repo root and drop your app screenshots in it (<code>.png</code> or <code>.jpg</code>). These appear in the details screen gallery with a fullscreen viewer.</p>
+                            <p class="docs-note"><i class="fa-solid fa-lightbulb"></i> Use portrait screenshots at a consistent size for the cleanest gallery.</p>
+                        </div>
+                    </div>
+
+                    <div class="docs-step">
+                        <span class="docs-step-num">5</span>
+                        <div>
+                            <h3>Wait for discovery</h3>
+                            <p>That&rsquo;s it &mdash; there&rsquo;s no submission form. Once your repo meets the requirements, RepoStore can surface it through search. Stars and good topics improve how likely it is to appear in the Trending, Recently Updated, and Featured sections.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="structure" class="docs-block reveal">
+                    <h2><i class="fa-solid fa-folder-tree"></i> Recommended repo structure</h2>
+                    <p>Here is a minimal layout that works well with RepoStore:</p>
+                    <pre class="docs-code"><code>your-app/
+├── app/                  # your Android app module
+├── screenshots/          # images shown in the RepoStore gallery
+│   ├── 1.png
+│   ├── 2.png
+│   └── 3.png
+├── README.md             # rendered as "About this app"
+├── build.gradle.kts
+└── settings.gradle.kts
+
+Release (on GitHub → Releases):
+└── v1.0.0
+    └── app-release.apk   # the installable APK asset</code></pre>
+                </section>
+
+                <section id="readme" class="docs-block reveal">
+                    <h2><i class="fa-brands fa-markdown"></i> README.md template</h2>
+                    <p>Copy this into your repo&rsquo;s <code>README.md</code> and adjust the details:</p>
+                    <pre class="docs-code"><code># TODO App
+
+A simple, clean to-do list app for Android built with Kotlin
+and Material 3.
+
+## Features
+- Add, edit, and delete tasks
+- Mark tasks as complete
+- Offline-first with local storage
+- Light and dark themes
+
+## Screenshots
+Screenshots are in the [screenshots/](screenshots/) folder.
+
+## Download
+Grab the latest APK from the
+[Releases](../../releases/latest) page,
+or install it through RepoStore.
+
+## License
+MIT
+</code></pre>
+                </section>
+
+                <section id="example" class="docs-block reveal">
+                    <h2><i class="fa-brands fa-github"></i> Real example: samyak2403/TODOApp</h2>
+                    <p><a href="https://github.com/samyak2403/TODOApp" target="_blank" class="text-accent">samyak2403/TODOApp</a> is a working example of a RepoStore-ready repository. It has everything RepoStore looks for:</p>
+                    <ul class="docs-checklist">
+                        <li><i class="fa-solid fa-check"></i> A public repo with an <code>app/</code> Android module.</li>
+                        <li><i class="fa-solid fa-check"></i> A root <code>README.md</code> describing the app.</li>
+                        <li><i class="fa-solid fa-check"></i> A <code>screenshots/</code> folder with preview images.</li>
+                        <li><i class="fa-solid fa-check"></i> Releases that publish an installable <code>.apk</code>.</li>
+                    </ul>
+                    <p>Use it as a reference when structuring your own project.</p>
+                    <a href="https://github.com/samyak2403/TODOApp" target="_blank" class="btn btn-primary docs-cta">
+                        <i class="fa-brands fa-github"></i> View TODOApp on GitHub
+                    </a>
+                </section>
+
+                <section id="faq" class="docs-block reveal">
+                    <h2><i class="fa-solid fa-circle-question"></i> FAQ</h2>
+
+                    <div class="docs-faq">
+                        <h3>Do I need to submit my app anywhere?</h3>
+                        <p>No. RepoStore finds apps automatically through GitHub search. Just meet the requirements and keep your repo public.</p>
+                    </div>
+                    <div class="docs-faq">
+                        <h3>Why isn&rsquo;t my app showing up?</h3>
+                        <p>The most common reasons: the latest release has no <code>.apk</code> asset, the release is a draft/prerelease, the repo is private/archived, or it isn&rsquo;t discoverable via search yet. Add relevant topics and a few stars help.</p>
+                    </div>
+                    <div class="docs-faq">
+                        <h3>Which release does RepoStore install?</h3>
+                        <p>Always the latest published release. Ship each new version as a new GitHub Release with the updated APK.</p>
+                    </div>
+                    <div class="docs-faq">
+                        <h3>What image formats work for screenshots?</h3>
+                        <p>Standard web image formats such as <code>.png</code> and <code>.jpg</code> placed inside the <code>screenshots/</code> folder.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="images/icon.png" alt="RepoStore Logo" class="logo-img"> RepoStore
+                    </div>
+                    <p>The open source app store for GitHub releases on Android.</p>
+                    <p class="dev-credit">Developed by <a href="https://github.com/samyak2403" target="_blank"
+                            class="text-accent">Samyak Kamble</a></p>
+                </div>
+
+                <div class="footer-links-group">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="docs.html">Developer Docs</a></li>
+                        <li><a href="https://github.com/samyak2403/RepoStore">Source Code</a></li>
+                        <li><a href="https://github.com/samyak2403/RepoStore/releases">Releases</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-group">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/samyak2403/RepoStore/issues">Submit Issue</a></li>
+                        <li><a href="privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="mailto:samyakkamble6659@gmail.com">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 RepoStore. All rights reserved.</p>
+                <div class="social-icons">
+                    <a href="https://github.com/samyak2403/RepoStore" aria-label="GitHub"><i
+                            class="fa-brands fa-github"></i></a>
+                    <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
