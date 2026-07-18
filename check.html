@@ -4,11 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https://raw.githubusercontent.com https://fdroid.gitlab.io https://gitlab.com https://avatars.githubusercontent.com data:; connect-src https://api.github.com;">
-    <meta name="description" content="Track RepoStore's growth with live download statistics across every GitHub release. Data pulled directly from the GitHub API.">
-    <title>RepoStore - Statistics</title>
+    <meta name="description" content="Check if your GitHub repository is RepoStore-compatible. Paste a repo URL to verify it ships an APK release, has a README and screenshots, and will be discoverable.">
+    <title>RepoStore - Compatibility Checker</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +15,6 @@
     <link rel="icon" type="image/png" href="images/icon.png">
     <link rel="apple-touch-icon" href="images/icon.png">
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 </head>
 
 <body>
@@ -41,7 +37,7 @@
                 <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <a href="https://github.com/samyak2403/RepoStore" target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="GitHub Repository">
+                <a href="https://github.com/samyak2403/RepoStore" target="_blank" class="icon-btn" aria-label="GitHub Repository">
                     <i class="fa-brands fa-github"></i>
                 </a>
                 <a href="index.html#download" class="btn btn-primary nav-download">Download</a>
@@ -66,36 +62,40 @@
     </nav>
 
     <!-- Content -->
-    <section class="stats-section">
+    <section class="check-section">
         <div class="container">
-            <div class="stats-header animate-slide-up">
-                <h1>Download <span class="text-gradient">Statistics</span></h1>
-                <p>Track the growth of RepoStore across all our releases. Data is fetched directly from the GitHub API, showing the total downloads per release alongside their publication date (Day, Month, Year).</p>
-            </div>
-            
-            <div class="stats-summary animate-slide-up-delay">
-                <div class="summary-card">
-                    <h3>GitHub Downloads</h3>
-                    <div class="summary-value" id="total-downloads-val">0</div>
-                </div>
-                <div class="summary-card">
-                    <h3><i class="fa-brands fa-android" style="color: #3DDC84;"></i> IzzyOnDroid Downloads</h3>
-                    <div class="summary-value" id="izzy-downloads-val">0</div>
-                    <a href="https://apt.izzysoft.de/packages/com.samyak.repostore" target="_blank" class="text-accent" style="font-size: 0.85rem; text-decoration: none;">View on IzzyOnDroid</a>
-                </div>
-                <div class="summary-card">
-                    <h3><i class="fa-solid fa-cube" style="color: #1976d2;"></i> F-Droid Downloads</h3>
-                    <div class="summary-value" id="fdroid-downloads-val">0</div>
-                    <a href="https://f-droid.org/packages/com.samyak.repostore" target="_blank" class="text-accent" style="font-size: 0.85rem; text-decoration: none;">View on F-Droid</a>
-                </div>
+            <div class="check-header reveal animate-slide-up">
+                <h1>Compatibility <span class="text-gradient">Checker</span></h1>
+                <p>Paste a public GitHub repository URL and we&rsquo;ll verify whether it meets the requirements to appear in RepoStore.</p>
             </div>
 
-            <div class="chart-container reveal">
-                <canvas id="downloadsChart"></canvas>
-            </div>
+            <form id="check-form" class="check-form reveal animate-slide-up-delay" autocomplete="off">
+                <div class="check-input-wrap">
+                    <i class="fa-brands fa-github"></i>
+                    <input type="text" id="repo-input" placeholder="https://github.com/samyak2403/TODOApp"
+                           aria-label="GitHub repository URL" spellcheck="false">
+                </div>
+                <button type="submit" class="btn btn-primary" id="check-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i> Check
+                </button>
+            </form>
+            <p class="check-hint reveal">Try an example:
+                <a href="#" class="check-example" data-repo="samyak2403/TODOApp">samyak2403/TODOApp</a> &middot;
+                <a href="#" class="check-example" data-repo="samyak2403/RepoStore">samyak2403/RepoStore</a>
+            </p>
 
-            <div class="chart-container reveal">
-                <canvas id="platformChart"></canvas>
+            <!-- Results -->
+            <div id="check-results" class="check-results" hidden>
+                <div id="repo-header" class="repo-header"></div>
+                <div id="verdict" class="verdict"></div>
+                <div id="score" class="check-score"></div>
+                <ul id="check-list" class="check-list"></ul>
+                <div id="check-actions" class="check-actions"></div>
+                <p class="check-note">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Checks use the public GitHub API (60 requests/hour, unauthenticated). See the
+                    <a href="docs.html" class="text-accent">developer docs</a> for how to fix any failures.
+                </p>
             </div>
         </div>
     </section>
@@ -110,15 +110,15 @@
                     </div>
                     <p>The open source app store for GitHub releases on Android.</p>
                     <p class="dev-credit">Developed by <a href="https://github.com/samyak2403" target="_blank"
-                            rel="noopener noreferrer" class="text-accent">Samyak Kamble</a></p>
+                            class="text-accent">Samyak Kamble</a></p>
                 </div>
 
                 <div class="footer-links-group">
                     <h4>Resources</h4>
                     <ul>
+                        <li><a href="docs.html">Developer Docs</a></li>
+                        <li><a href="check.html">Compatibility Checker</a></li>
                         <li><a href="https://github.com/samyak2403/RepoStore">Source Code</a></li>
-                        <li><a href="https://github.com/samyak2403/RepoStore/wiki">Wiki</a></li>
-                        <li><a href="https://github.com/samyak2403/RepoStore/releases">Releases</a></li>
                     </ul>
                 </div>
 
@@ -144,7 +144,7 @@
     </footer>
 
     <script src="script.js"></script>
-    <script src="stats.js"></script>
+    <script src="check.js"></script>
 </body>
 
 </html>
