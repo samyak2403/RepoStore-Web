@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fallback counts, used when the local data/*.json files can't be loaded
     // (e.g. when the page is opened directly from disk via file://).
-    const IZZY_FALLBACK_COUNT = 38932;
+    const IZZY_FALLBACK_COUNT = 46552;
     const FDROID_FALLBACK_COUNT = 46135;
 
     // Platform brand-ish colors (per request: F-Droid green, IzzyOnDroid red).
