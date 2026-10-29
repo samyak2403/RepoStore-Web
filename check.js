@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function parseRepo(value) {
         if (!value) return null;
         let v = value.trim();
+        v = v.replace(/^git@github\.com:/i, '');
         v = v.replace(/^https?:\/\/(www\.)?github\.com\//i, '');
         v = v.replace(/\.git$/i, '');
         v = v.replace(/\/+$/,'');
@@ -58,10 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderRepoHeader(repo, data) {
         const desc = data.description ? esc(data.description) : 'No description provided.';
+        const avatar = data.owner && data.owner.avatar_url ? esc(data.owner.avatar_url) : 'images/icon.png';
+        const url = data.html_url ? esc(data.html_url) : `https://github.com/${encodeURIComponent(repo.owner)}/${encodeURIComponent(repo.repo)}`;
         repoHeaderEl.innerHTML = `
-            <img class="repo-avatar" src="${data.owner && data.owner.avatar_url ? data.owner.avatar_url : 'images/icon.png'}" alt="${esc(repo.owner)} avatar">
+            <img class="repo-avatar" src="${avatar}" alt="${esc(repo.owner)} avatar">
             <div class="repo-meta">
-                <a class="repo-name" href="${data.html_url}" target="_blank" rel="noopener">
+                <a class="repo-name" href="${url}" target="_blank" rel="noopener noreferrer">
                     ${esc(repo.owner)}/<strong>${esc(repo.repo)}</strong>
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
@@ -77,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderScore(checks) {
         const total = checks.length;
         const passed = checks.filter(c => c.status === 'pass').length;
-        const pct = Math.round((passed / total) * 100);
+        const pct = total > 0 ? Math.round((passed / total) * 100) : 0;
         const barClass = pct === 100 ? 'full' : (pct >= 70 ? 'ok' : 'low');
         scoreEl.innerHTML = `
             <div class="score-row">
@@ -108,8 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
         listEl.querySelectorAll('.check-head').forEach(head => {
             head.addEventListener('click', () => {
                 const item = head.closest('.check-item');
-                const isOpen = item.classList.toggle('open');
-                head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                if (item) {
+                    const isOpen = item.classList.toggle('open');
+                    head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                }
             });
         });
     }
@@ -122,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             verdictEl.innerHTML = `
                 <i class="fa-solid fa-circle-check"></i>
                 <div>
-                    <strong>${repo.owner}/${repo.repo} is RepoStore-ready!</strong>
+                    <strong>${esc(repo.owner)}/${esc(repo.repo)} is RepoStore-ready!</strong>
                     <span>${warned.length ? warned.length + ' recommendation(s) to improve discovery.' : 'All checks passed.'}</span>
                 </div>`;
         } else {
@@ -159,12 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderActions(repo) {
-        const shareUrl = `${location.origin}${location.pathname}?repo=${repo.owner}/${repo.repo}`;
+        const shareUrl = `${location.origin}${location.pathname}?repo=${encodeURIComponent(repo.owner + '/' + repo.repo)}`;
         actionsEl.innerHTML = `
             <button type="button" class="btn btn-secondary" id="copy-link">
                 <i class="fa-solid fa-link"></i> Copy share link
             </button>
-            <a class="btn btn-secondary" href="https://github.com/${repo.owner}/${repo.repo}" target="_blank" rel="noopener">
+            <a class="btn btn-secondary" href="https://github.com/${encodeURIComponent(repo.owner)}/${encodeURIComponent(repo.repo)}" target="_blank" rel="noopener noreferrer">
                 <i class="fa-brands fa-github"></i> View on GitHub
             </a>
             <button type="button" class="btn btn-secondary" id="recheck">
@@ -172,16 +177,25 @@ document.addEventListener('DOMContentLoaded', () => {
             </button>`;
 
         const copyBtn = document.getElementById('copy-link');
-        copyBtn.addEventListener('click', async () => {
-            try {
-                await navigator.clipboard.writeText(shareUrl);
-                copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                setTimeout(() => { copyBtn.innerHTML = '<i class="fa-solid fa-link"></i> Copy share link'; }, 1800);
-            } catch (e) {
-                window.prompt('Copy this link:', shareUrl);
-            }
-        });
-        document.getElementById('recheck').addEventListener('click', () => handleCheck(`${repo.owner}/${repo.repo}`));
+        if (copyBtn) {
+            copyBtn.addEventListener('click', async () => {
+                try {
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        await navigator.clipboard.writeText(shareUrl);
+                    } else {
+                        throw new Error('Clipboard API unavailable');
+                    }
+                    copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                    setTimeout(() => { copyBtn.innerHTML = '<i class="fa-solid fa-link"></i> Copy share link'; }, 1800);
+                } catch (e) {
+                    window.prompt('Copy this link:', shareUrl);
+                }
+            });
+        }
+        const recheckBtn = document.getElementById('recheck');
+        if (recheckBtn) {
+            recheckBtn.addEventListener('click', () => handleCheck(`${repo.owner}/${repo.repo}`));
+        }
     }
 
     function showMessage(title, desc) {
@@ -190,8 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreEl.innerHTML = '';
         verdictEl.className = 'verdict fail';
         verdictEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i>
-            <div><strong>${title}</strong><span>${desc}</span></div>`;
+            <div><strong>${esc(title)}</strong><span>${esc(desc)}</span></div>`;
         listEl.innerHTML = '';
+        actionsEl.innerHTML = '';
     }
 
     async function runChecks(repo) {
@@ -221,11 +236,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Run the remaining lookups in parallel.
-        const [latestRes, readmeRes, screenshotsRes] = await Promise.all([
-            ghFetch(`/repos/${repo.owner}/${repo.repo}/releases/latest`),
-            ghFetch(`/repos/${repo.owner}/${repo.repo}/readme`),
-            ghFetch(`/repos/${repo.owner}/${repo.repo}/contents/screenshots`)
-        ]);
+        let latestRes, readmeRes, screenshotsRes;
+        try {
+            [latestRes, readmeRes, screenshotsRes] = await Promise.all([
+                ghFetch(`/repos/${repo.owner}/${repo.repo}/releases/latest`),
+                ghFetch(`/repos/${repo.owner}/${repo.repo}/readme`),
+                ghFetch(`/repos/${repo.owner}/${repo.repo}/contents/screenshots`)
+            ]);
+        } catch (e) {
+            showMessage('Network error', 'Failed to fetch release and documentation details. Please try again.');
+            return;
+        }
+
+        if (latestRes.status === 403 || readmeRes.status === 403 || screenshotsRes.status === 403) {
+            showMessage('GitHub rate limit reached', 'The public API allows 60 checks per hour. Please try again later.');
+            return;
+        }
 
         const checks = [];
 
@@ -246,13 +272,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // Latest published release (excludes drafts/prereleases)
         let latest = null;
         if (latestRes.ok) {
-            latest = await latestRes.json();
-            checks.push({
-                title: 'Published release',
-                required: true,
-                status: 'pass',
-                desc: `Latest release: ${latest.tag_name || latest.name || 'found'}.`
-            });
+            try {
+                latest = await latestRes.json();
+                checks.push({
+                    title: 'Published release',
+                    required: true,
+                    status: 'pass',
+                    desc: `Latest release: ${latest.tag_name || latest.name || 'found'}.`
+                });
+            } catch (e) {
+                checks.push({
+                    title: 'Published release',
+                    required: true,
+                    status: 'fail',
+                    desc: 'Error parsing release response.'
+                });
+            }
         } else {
             checks.push({
                 title: 'Published release',
@@ -288,8 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
             desc: readmeRes.ok ? 'README is rendered as “About this app”.' : 'Add a README.md at the repo root.'
         });
 
-        // screenshots/ folder with images
-        let screenshotStatus = 'fail';
+        // screenshots/ folder with images (recommended, not required)
+        let screenshotStatus = 'warn';
         let screenshotDesc = 'Add a screenshots/ folder with image files.';
         if (screenshotsRes.ok) {
             try {
@@ -304,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     screenshotStatus = 'warn';
                     screenshotDesc = 'screenshots/ folder exists but has no image files.';
                 }
-            } catch (e) { /* keep fail */ }
+            } catch (e) { /* keep warn */ }
         }
         checks.push({
             title: 'Screenshots folder',
@@ -334,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
         results.hidden = false;
 
         // Update the URL so the result is shareable/bookmarkable.
-        const url = `${location.pathname}?repo=${repo.owner}/${repo.repo}`;
+        const url = `${location.pathname}?repo=${encodeURIComponent(repo.owner + '/' + repo.repo)}`;
         history.replaceState(null, '', url);
     }
 

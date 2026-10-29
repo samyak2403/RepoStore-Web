@@ -6,14 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
      * Dark Mode Toggle
      */
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeIcon = themeToggleBtn.querySelector('i');
+    const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null;
 
     // Check for saved user preference, if any, on load of the website
     const currentTheme = localStorage.getItem('theme');
 
     if (currentTheme) {
         document.documentElement.setAttribute('data-theme', currentTheme);
-        if (currentTheme === 'dark') {
+        if (themeIcon && currentTheme === 'dark') {
             themeIcon.classList.replace('fa-moon', 'fa-sun');
         }
     } else {
@@ -21,23 +21,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
         if (prefersDarkScheme.matches) {
             document.documentElement.setAttribute('data-theme', 'dark');
-            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            if (themeIcon) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
             localStorage.setItem('theme', 'dark');
         }
     }
 
-    themeToggleBtn.addEventListener('click', () => {
-        let theme = document.documentElement.getAttribute('data-theme');
-        if (theme === 'dark') {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('theme', 'light');
-            themeIcon.classList.replace('fa-sun', 'fa-moon');
-        } else {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-            themeIcon.classList.replace('fa-moon', 'fa-sun');
-        }
-    });
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const nextTheme = current === 'dark' ? 'light' : 'dark';
+            if (nextTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                if (themeIcon) themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                if (themeIcon) themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+            window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: nextTheme } }));
+        });
+    }
 
     /**
      * Mobile Menu Toggle
@@ -49,11 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const menuIcon = mobileMenuBtn.querySelector('i');
 
         mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
-            if (mobileMenu.classList.contains('active')) {
-                menuIcon.classList.replace('fa-bars', 'fa-xmark');
-            } else {
-                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            const isActive = mobileMenu.classList.toggle('active');
+            mobileMenuBtn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+            if (menuIcon) {
+                if (isActive) {
+                    menuIcon.classList.replace('fa-bars', 'fa-xmark');
+                } else {
+                    menuIcon.classList.replace('fa-xmark', 'fa-bars');
+                }
             }
         });
 
@@ -62,7 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('active');
-                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                if (menuIcon) {
+                    menuIcon.classList.replace('fa-xmark', 'fa-bars');
+                }
             });
         });
     }
@@ -71,62 +83,62 @@ document.addEventListener('DOMContentLoaded', () => {
      * Navbar scroll effect
      */
     const navbar = document.querySelector('.navbar');
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+    if (navbar) {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+    }
 
     /**
      * Intersection Observer for scroll animations (Reveal effect)
      */
     const reveals = document.querySelectorAll('.reveal');
+    if (reveals.length > 0) {
+        if ('IntersectionObserver' in window) {
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
 
-    const revealOptions = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px"
-    };
+            const revealOnScroll = new IntersectionObserver(function (entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
 
-    const revealOnScroll = new IntersectionObserver(function (entries, observer) {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                return;
-            } else {
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, revealOptions);
-
-    reveals.forEach(reveal => {
-        revealOnScroll.observe(reveal);
-    });
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        } else {
+            reveals.forEach(reveal => reveal.classList.add('active'));
+        }
+    }
 
     /**
-     * Fetch GitHub Stats (Stars, Downloads, Forks)
+     * GitHub & Platform Stats
      */
     const REPO_OWNER = 'samyak2403';
     const REPO_NAME = 'RepoStore';
+
+    const starsEl = document.getElementById('stars-count');
+    const forksEl = document.getElementById('forks-count');
+    const downloadsEl = document.getElementById('downloads-count');
+    const qrContainer = document.getElementById('apk-qrcode');
+    const track = document.getElementById('contributors-track');
 
     function formatNumber(num) {
         if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
         if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
         return num.toString();
-    }
-
-    // Load a downloads count from a local stats file, falling back to a
-    // built-in value if the file can't be read (e.g. opened via file://).
-    function loadLocalDownloads(url, fallback) {
-        return fetch(url, { cache: 'no-cache' })
-            .then(res => (res.ok ? res.json() : Promise.reject(new Error('not ok'))))
-            .then(data => {
-                const n = Number(data.downloads);
-                return Number.isFinite(n) ? n : fallback;
-            })
-            .catch(() => fallback);
     }
 
     function animateCount(element, target) {
@@ -137,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
         function update(currentTime) {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            // Ease out cubic
             const easeOut = 1 - Math.pow(1 - progress, 3);
             const current = Math.floor(start + (target - start) * easeOut);
             element.textContent = formatNumber(current);
@@ -150,75 +161,101 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(update);
     }
 
-    // Fetch repo info (stars + forks)
-    fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`)
-        .then(res => res.json())
-        .then(data => {
-            const starsEl = document.getElementById('stars-count');
-            const forksEl = document.getElementById('forks-count');
-            if (starsEl && data.stargazers_count !== undefined) {
-                animateCount(starsEl, data.stargazers_count);
-            }
-            if (forksEl && data.forks_count !== undefined) {
-                animateCount(forksEl, data.forks_count);
-            }
-        })
-        .catch(() => {
-            const s = document.getElementById('stars-count'); if(s) s.textContent = '300+';
-            const f = document.getElementById('forks-count'); if(f) f.textContent = '—';
-        });
+    // Resolve path to data directory properly regardless of current directory
+    function resolveDataPath(filename) {
+        const inSubdir = window.location.pathname.includes('/privacy-policy/');
+        return (inSubdir ? '../data/' : 'data/') + filename;
+    }
 
-    // Fallback download counts (kept roughly in sync with data/*.json). Used
-    // only when the local stat files can't be loaded.
-    const FDROID_FALLBACK_COUNT = 46135;
-    const IZZY_FALLBACK_COUNT = 38932;
+    // Load a downloads count from a local stats file, falling back to a built-in value
+    function loadLocalDownloads(url, fallback) {
+        return fetch(url, { cache: 'no-cache' })
+            .then(res => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+            .then(data => {
+                const n = Number(data && data.downloads);
+                return Number.isFinite(n) ? n : fallback;
+            })
+            .catch(() => fallback);
+    }
 
-    // Fetch GitHub release downloads (and the latest APK url for the QR code).
-    // Returns the GitHub download total; resolves to 0 if the request fails.
+    // Fetch repo info (stars + forks) ONLY if elements exist on page
+    if (starsEl || forksEl) {
+        fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`)
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+            })
+            .then(data => {
+                if (starsEl && typeof data.stargazers_count === 'number') {
+                    animateCount(starsEl, data.stargazers_count);
+                }
+                if (forksEl && typeof data.forks_count === 'number') {
+                    animateCount(forksEl, data.forks_count);
+                }
+            })
+            .catch(() => {
+                if (starsEl && (starsEl.textContent === '—' || starsEl.textContent === '')) starsEl.textContent = '1.3K+';
+                if (forksEl && (forksEl.textContent === '—' || forksEl.textContent === '')) forksEl.textContent = '80+';
+            });
+    }
+
+    // Up-to-date fallback download counts
+    const FDROID_FALLBACK_COUNT = 90329;
+    const IZZY_FALLBACK_COUNT = 54790;
+    const GITHUB_FALLBACK_COUNT = 37257;
+
+    // Fetch GitHub release downloads (and latest APK url for QR code)
     function getGithubDownloads() {
         return fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+            })
             .then(releases => {
+                if (!Array.isArray(releases)) return GITHUB_FALLBACK_COUNT;
+
                 let githubDownloads = 0;
                 let latestApkUrl = null;
 
                 releases.forEach((release, index) => {
-                    release.assets.forEach(asset => {
-                        githubDownloads += asset.download_count;
-                        if (index === 0 && asset.name.endsWith('.apk') && !latestApkUrl) {
-                            latestApkUrl = asset.browser_download_url;
-                        }
-                    });
-                });
-
-                if (latestApkUrl) {
-                    const qrContainer = document.getElementById('apk-qrcode');
-                    if (qrContainer) {
-                        new QRCode(qrContainer, {
-                            text: latestApkUrl,
-                            width: 128,
-                            height: 128,
-                            colorDark : "#000000",
-                            colorLight : "#ffffff",
-                            correctLevel : QRCode.CorrectLevel.L
+                    if (Array.isArray(release.assets)) {
+                        release.assets.forEach(asset => {
+                            githubDownloads += (asset.download_count || 0);
+                            if (index === 0 && asset.name && asset.name.endsWith('.apk') && !latestApkUrl) {
+                                latestApkUrl = asset.browser_download_url;
+                            }
                         });
                     }
+                });
+
+                if (latestApkUrl && qrContainer && typeof QRCode !== 'undefined') {
+                    qrContainer.innerHTML = '';
+                    new QRCode(qrContainer, {
+                        text: latestApkUrl,
+                        width: 128,
+                        height: 128,
+                        colorDark : "#000000",
+                        colorLight : "#ffffff",
+                        correctLevel : QRCode.CorrectLevel.L
+                    });
                 }
 
-                return githubDownloads;
+                return githubDownloads > 0 ? githubDownloads : GITHUB_FALLBACK_COUNT;
             })
-            .catch(() => 0);
+            .catch(() => GITHUB_FALLBACK_COUNT);
     }
 
-    // Combined total = GitHub + F-Droid + IzzyOnDroid downloads.
-    Promise.all([
-        getGithubDownloads(),
-        loadLocalDownloads('data/fdroid-stats.json', FDROID_FALLBACK_COUNT),
-        loadLocalDownloads('data/izzy-stats.json', IZZY_FALLBACK_COUNT)
-    ]).then(([github, fdroid, izzy]) => {
-        const downloadsEl = document.getElementById('downloads-count');
-        if (downloadsEl) animateCount(downloadsEl, github + fdroid + izzy);
-    });
+    // Combined total = GitHub + F-Droid + IzzyOnDroid downloads (only if downloadsEl is present)
+    if (downloadsEl || qrContainer) {
+        Promise.all([
+            getGithubDownloads(),
+            loadLocalDownloads(resolveDataPath('fdroid-stats.json'), FDROID_FALLBACK_COUNT),
+            loadLocalDownloads(resolveDataPath('izzy-stats.json'), IZZY_FALLBACK_COUNT)
+        ]).then(([github, fdroid, izzy]) => {
+            if (downloadsEl) animateCount(downloadsEl, github + fdroid + izzy);
+        });
+    }
+
     // Click animation for feature cards
     const featureCards = document.querySelectorAll('.feature-card');
     featureCards.forEach(card => {
@@ -226,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.classList.add('clicked');
             setTimeout(() => {
                 card.classList.remove('clicked');
-            }, 400); // match animation duration
+            }, 400);
         });
     });
 
@@ -244,28 +281,28 @@ document.addEventListener('DOMContentLoaded', () => {
     function buildContributorCard(contributor, index) {
         const card = document.createElement('a');
         card.className = 'contributor-card';
-        card.href = contributor.html_url;
+        card.href = contributor.html_url || `https://github.com/${encodeURIComponent(contributor.login || '')}`;
         card.target = '_blank';
         card.rel = 'noopener noreferrer';
-        card.setAttribute('aria-label', 'View ' + contributor.login + '\'s GitHub profile');
+        card.setAttribute('aria-label', `View ${contributor.login || 'contributor'}'s GitHub profile`);
 
         const gradient = ringGradients[index % ringGradients.length];
 
-        // Use safe DOM methods instead of innerHTML to prevent XSS
         const avatarWrapper = document.createElement('div');
         avatarWrapper.className = 'contributor-avatar-wrapper';
         avatarWrapper.style.background = gradient;
 
         const avatarImg = document.createElement('img');
         avatarImg.className = 'contributor-avatar';
-        avatarImg.src = contributor.avatar_url + '&s=150';
-        avatarImg.alt = contributor.login;
+        const sep = (contributor.avatar_url || '').includes('?') ? '&' : '?';
+        avatarImg.src = contributor.avatar_url ? `${contributor.avatar_url}${sep}s=150` : 'images/icon.png';
+        avatarImg.alt = contributor.login || 'Contributor';
         avatarImg.loading = 'lazy';
         avatarWrapper.appendChild(avatarImg);
 
         const nameSpan = document.createElement('span');
         nameSpan.className = 'contributor-name';
-        nameSpan.textContent = contributor.login;
+        nameSpan.textContent = contributor.login || 'Contributor';
 
         card.appendChild(avatarWrapper);
         card.appendChild(nameSpan);
@@ -274,27 +311,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function populateMarquee(contributors) {
-        const track = document.getElementById('contributors-track');
-        if (!track || contributors.length === 0) return;
-
+        if (!track || !Array.isArray(contributors) || contributors.length === 0) return;
         track.innerHTML = '';
         contributors.forEach((c, i) => track.appendChild(buildContributorCard(c, i)));
         contributors.forEach((c, i) => track.appendChild(buildContributorCard(c, i)));
     }
 
-    fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=100`)
-        .then(res => {
-            if (!res.ok) throw new Error('API rate limit or network error');
-            return res.json();
-        })
-        .then(contributors => {
-            if (Array.isArray(contributors) && contributors.length > 0) {
-                const realContributors = contributors.filter(c => c.type === 'User');
-                populateMarquee(realContributors);
-            }
-        })
-        .catch(err => {
-            console.warn('Could not fetch contributors:', err);
-        });
+    // Only fetch contributors if marquee track element exists
+    if (track) {
+        fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=100`)
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+            })
+            .then(contributors => {
+                if (Array.isArray(contributors) && contributors.length > 0) {
+                    const realContributors = contributors.filter(c => c.type === 'User');
+                    populateMarquee(realContributors);
+                }
+            })
+            .catch(err => {
+                console.warn('Could not fetch contributors:', err);
+            });
+    }
 
+
+    // Adsterra Native Banner auto-cleanup: hide empty placeholders if blocked or unfilled
+    function monitorAdPlacements() {
+        setTimeout(function() {
+            var wrappers = document.querySelectorAll('.ad-banner-wrapper, .ad-native-wrapper');
+            wrappers.forEach(function(w) {
+                var container = w.querySelector('.ad-banner-300x250, .ad-native-container');
+                if (container) {
+                    var hasAd = container.querySelector('iframe, img, a, [id*="atContainer"]');
+                    if (!hasAd && container.clientHeight < 30) {
+                        w.classList.add('ad-hidden');
+                    }
+                }
+            });
+        }, 2000);
+    }
+    monitorAdPlacements();
 });
+

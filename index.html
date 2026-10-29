@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https://raw.githubusercontent.com https://fdroid.gitlab.io https://gitlab.com https://avatars.githubusercontent.com data:; connect-src https://api.github.com;">
-    <meta name="description" content="RepoStore is an open-source Android app store for discovering, downloading, and installing apps directly from GitHub releases.">
+            <meta name="description" content="RepoStore is an open-source Android app store for discovering, downloading, and installing apps directly from GitHub releases.">
     <title>RepoStore - The App Store for GitHub Releases</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,6 +28,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
                 <li><a href="docs.html">Docs</a></li>
                 <li><a href="check.html">Check</a></li>
                 <li><a href="stats.html">Stats</a></li>
@@ -42,7 +42,7 @@
                     <i class="fa-brands fa-github"></i>
                 </a>
                 <a href="#download" class="btn btn-primary nav-download">Download</a>
-                <button class="menu-toggle icon-btn" id="mobile-menu-btn">
+                <button class="menu-toggle icon-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
@@ -53,9 +53,11 @@
         <div class="mobile-menu" id="mobile-menu">
             <ul>
                 <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
                 <li><a href="docs.html">Docs</a></li>
                 <li><a href="check.html">Check</a></li>
                 <li><a href="stats.html">Stats</a></li>
+                <li><a href="#contributors">Contributors</a></li>
                 <li><a href="#download" class="btn btn-primary"
                         style="display: inline-block; text-align: center; width: 100%;">Download Latest</a></li>
             </ul>
@@ -152,6 +154,29 @@
             </div>
         </div>
     </header>
+
+                <div class="container">
+        <!-- Adsterra Native Banner (NativeBanner_1) -->
+        <div class="ad-native-wrapper">
+            <div class="ad-banner-label">
+                <span>Sponsored</span>
+                <a href="https://ardance.org/4/e2a97aece18c389f970f2a5ec4f8ef51" target="_blank" rel="noopener noreferrer sponsored" class="ad-direct-link" title="Sponsored Link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+            <div id="container-e2a97aece18c389f970f2a5ec4f8ef51" class="ad-native-container">
+                <script async="async" data-cfasync="false" src="https://www.highperformanceformat.com/e2a97aece18c389f970f2a5ec4f8ef51/invoke.js"></script>
+                <script type="text/javascript">
+                    if (typeof atAsyncOptions !== 'object') var atAsyncOptions = [];
+                    atAsyncOptions.push({
+                        'key': 'e2a97aece18c389f970f2a5ec4f8ef51',
+                        'format': 'js',
+                        'async': true,
+                        'container': 'container-e2a97aece18c389f970f2a5ec4f8ef51',
+                        'params': {}
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
 
     <!-- Features Section -->
     <section id="features" class="features section-padding reveal">
@@ -261,8 +286,8 @@
                         <li><i class="fa-solid fa-check text-accent"></i> Relevant topics and description for
                             discoverability</li>
                     </ul>
-                    <a href="https://github.com/Samyak-Kamble" target="_blank" rel="noopener noreferrer" class="btn btn-secondary mt-4">
-                        <i class="fa-solid fa-book"></i> Read the Wiki
+                    <a href="docs.html" class="btn btn-secondary mt-4">
+                        <i class="fa-solid fa-book"></i> Read Developer Docs
                     </a>
                 </div>
                 <div class="dev-visual">
@@ -316,11 +341,34 @@
         </div>
     </section>
 
+                <div class="container">
+        <!-- Adsterra Native Banner (NativeBanner_1) -->
+        <div class="ad-native-wrapper">
+            <div class="ad-banner-label">
+                <span>Sponsored</span>
+                <a href="https://ardance.org/4/e2a97aece18c389f970f2a5ec4f8ef51" target="_blank" rel="noopener noreferrer sponsored" class="ad-direct-link" title="Sponsored Link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+            <div id="container-e2a97aece18c389f970f2a5ec4f8ef51" class="ad-native-container">
+                <script async="async" data-cfasync="false" src="https://www.highperformanceformat.com/e2a97aece18c389f970f2a5ec4f8ef51/invoke.js"></script>
+                <script type="text/javascript">
+                    if (typeof atAsyncOptions !== 'object') var atAsyncOptions = [];
+                    atAsyncOptions.push({
+                        'key': 'e2a97aece18c389f970f2a5ec4f8ef51',
+                        'format': 'js',
+                        'async': true,
+                        'container': 'container-e2a97aece18c389f970f2a5ec4f8ef51',
+                        'params': {}
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
     <!-- CTA Section -->
     <section id="download" class="cta section-padding reveal">
         <div class="container text-center max-w-2xl mx-auto">
             <h2 class="cta-title">Ready to try RepoStore?</h2>
-            <p class="cta-subtitle">100% free, no ads, no tracking. Join over 300+ stargazers who discover and install
+            <p class="cta-subtitle">100% free and open source. Join over 1,300+ stargazers who discover and install
                 open-source
                 software the easy way — directly from the source.</p>
 
@@ -354,6 +402,7 @@
                 <div class="footer-links-group">
                     <h4>Resources</h4>
                     <ul>
+                        <li><a href="docs.html">Developer Docs</a></li>
                         <li><a href="https://github.com/samyak2403/RepoStore">Source Code</a></li>
                         <li><a href="https://github.com/samyak2403/RepoStore/wiki">Wiki</a></li>
                         <li><a href="https://github.com/samyak2403/RepoStore/releases">Releases</a></li>
@@ -375,7 +424,7 @@
                 <div class="social-icons">
                     <a href="https://github.com/samyak2403/RepoStore" aria-label="GitHub"><i
                             class="fa-brands fa-github"></i></a>
-                    <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="https://github.com/samyak2403/RepoStore/discussions" aria-label="Discussions" title="Community Discussions"><i class="fa-solid fa-comments"></i></a>
                 </div>
             </div>
         </div>
@@ -383,6 +432,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="script.js"></script>
+    <!-- Adsterra Social Bar / Invoke -->
+    <script type="text/javascript" src="https://www.highperformanceformat.com/e2a97aece18c389f970f2a5ec4f8ef51/invoke.js"></script>
+    <!-- Adsterra Popunder_1 -->
+    <script data-cfasync="false" src="https://accountut.com/1/0b4e4e70db9e0d1fc799f24e663285e3"></script>
 </body>
 
 </html>

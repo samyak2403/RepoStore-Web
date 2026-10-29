@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="description" content="Developer docs for RepoStore: how to publish your Android app so it appears in RepoStore, with a README and screenshots folder, using samyak2403/TODOApp as an example.">
     <title>RepoStore - Developer Docs</title>
     <!-- Google Fonts -->
@@ -28,6 +30,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
                 <li><a href="docs.html">Docs</a></li>
                 <li><a href="check.html">Check</a></li>
                 <li><a href="stats.html">Stats</a></li>
@@ -37,11 +40,11 @@
                 <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <a href="https://github.com/samyak2403/RepoStore" target="_blank" class="icon-btn" aria-label="GitHub Repository">
+                <a href="https://github.com/samyak2403/RepoStore" target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="GitHub Repository">
                     <i class="fa-brands fa-github"></i>
                 </a>
                 <a href="index.html#download" class="btn btn-primary nav-download">Download</a>
-                <button class="menu-toggle icon-btn" id="mobile-menu-btn">
+                <button class="menu-toggle icon-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
@@ -51,6 +54,7 @@
         <div class="mobile-menu" id="mobile-menu">
             <ul>
                 <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
                 <li><a href="docs.html">Docs</a></li>
                 <li><a href="check.html">Check</a></li>
                 <li><a href="stats.html">Stats</a></li>
@@ -199,7 +203,7 @@ MIT
 
                 <section id="example" class="docs-block reveal">
                     <h2><i class="fa-brands fa-github"></i> Real example: samyak2403/TODOApp</h2>
-                    <p><a href="https://github.com/samyak2403/TODOApp" target="_blank" class="text-accent">samyak2403/TODOApp</a> is a working example of a RepoStore-ready repository. It has everything RepoStore looks for:</p>
+                    <p><a href="https://github.com/samyak2403/TODOApp" target="_blank" rel="noopener noreferrer" class="text-accent">samyak2403/TODOApp</a> is a working example of a RepoStore-ready repository. It has everything RepoStore looks for:</p>
                     <ul class="docs-checklist">
                         <li><i class="fa-solid fa-check"></i> A public repo with an <code>app/</code> Android module.</li>
                         <li><i class="fa-solid fa-check"></i> A root <code>README.md</code> describing the app.</li>
@@ -207,7 +211,7 @@ MIT
                         <li><i class="fa-solid fa-check"></i> Releases that publish an installable <code>.apk</code>.</li>
                     </ul>
                     <p>Use it as a reference when structuring your own project.</p>
-                    <a href="https://github.com/samyak2403/TODOApp" target="_blank" class="btn btn-primary docs-cta">
+                    <a href="https://github.com/samyak2403/TODOApp" target="_blank" rel="noopener noreferrer" class="btn btn-primary docs-cta">
                         <i class="fa-brands fa-github"></i> View TODOApp on GitHub
                     </a>
                 </section>
@@ -234,6 +238,27 @@ MIT
                 </section>
             </div>
         </div>
+
+                            <!-- Adsterra Native Banner (NativeBanner_1) -->
+        <div class="ad-native-wrapper">
+            <div class="ad-banner-label">
+                <span>Sponsored</span>
+                <a href="https://ardance.org/4/e2a97aece18c389f970f2a5ec4f8ef51" target="_blank" rel="noopener noreferrer sponsored" class="ad-direct-link" title="Sponsored Link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+            <div id="container-e2a97aece18c389f970f2a5ec4f8ef51" class="ad-native-container">
+                <script async="async" data-cfasync="false" src="https://www.highperformanceformat.com/e2a97aece18c389f970f2a5ec4f8ef51/invoke.js"></script>
+                <script type="text/javascript">
+                    if (typeof atAsyncOptions !== 'object') var atAsyncOptions = [];
+                    atAsyncOptions.push({
+                        'key': 'e2a97aece18c389f970f2a5ec4f8ef51',
+                        'format': 'js',
+                        'async': true,
+                        'container': 'container-e2a97aece18c389f970f2a5ec4f8ef51',
+                        'params': {}
+                    });
+                </script>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -246,14 +271,16 @@ MIT
                     </div>
                     <p>The open source app store for GitHub releases on Android.</p>
                     <p class="dev-credit">Developed by <a href="https://github.com/samyak2403" target="_blank"
-                            class="text-accent">Samyak Kamble</a></p>
+                            rel="noopener noreferrer" class="text-accent">Samyak Kamble</a></p>
                 </div>
 
                 <div class="footer-links-group">
                     <h4>Resources</h4>
                     <ul>
                         <li><a href="docs.html">Developer Docs</a></li>
+                        <li><a href="check.html">Compatibility Checker</a></li>
                         <li><a href="https://github.com/samyak2403/RepoStore">Source Code</a></li>
+                        <li><a href="https://github.com/samyak2403/RepoStore/wiki">Wiki</a></li>
                         <li><a href="https://github.com/samyak2403/RepoStore/releases">Releases</a></li>
                     </ul>
                 </div>
@@ -273,13 +300,17 @@ MIT
                 <div class="social-icons">
                     <a href="https://github.com/samyak2403/RepoStore" aria-label="GitHub"><i
                             class="fa-brands fa-github"></i></a>
-                    <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="https://github.com/samyak2403/RepoStore/discussions" aria-label="Discussions" title="Community Discussions"><i class="fa-solid fa-comments"></i></a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
+    <!-- Adsterra Social Bar / Invoke -->
+    <script type="text/javascript" src="https://www.highperformanceformat.com/e2a97aece18c389f970f2a5ec4f8ef51/invoke.js"></script>
+    <!-- Adsterra Popunder_1 -->
+    <script data-cfasync="false" src="https://accountut.com/1/0b4e4e70db9e0d1fc799f24e663285e3"></script>
 </body>
 
 </html>
