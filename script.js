@@ -334,23 +334,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.warn('Could not fetch contributors:', err);
             });
     }
-
-
-    // Adsterra Native Banner auto-cleanup: hide empty placeholders if blocked or unfilled
-    function monitorAdPlacements() {
-        setTimeout(function() {
-            var wrappers = document.querySelectorAll('.ad-banner-wrapper, .ad-native-wrapper');
-            wrappers.forEach(function(w) {
-                var container = w.querySelector('.ad-banner-300x250, .ad-native-container');
-                if (container) {
-                    var hasAd = container.querySelector('iframe, img, a, [id*="atContainer"]');
-                    if (!hasAd && container.clientHeight < 30) {
-                        w.classList.add('ad-hidden');
-                    }
-                }
-            });
-        }, 2000);
-    }
-    monitorAdPlacements();
 });
 
