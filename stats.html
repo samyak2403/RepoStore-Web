@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https://raw.githubusercontent.com https://fdroid.gitlab.io https://gitlab.com https://avatars.githubusercontent.com data:; connect-src 'self' https://api.github.com;">
     <meta name="description" content="Track RepoStore's growth with live download statistics across every GitHub release. Data pulled directly from the GitHub API.">
     <title>RepoStore - Statistics</title>
     <!-- Google Fonts -->
@@ -36,7 +36,6 @@
                 <li><a href="docs.html">Docs</a></li>
                 <li><a href="check.html">Check</a></li>
                 <li><a href="stats.html">Stats</a></li>
-                <li><a href="index.html#contributors">Contributors</a></li>
             </ul>
             <div class="nav-actions">
                 <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
@@ -46,7 +45,7 @@
                     <i class="fa-brands fa-github"></i>
                 </a>
                 <a href="index.html#download" class="btn btn-primary nav-download">Download</a>
-                <button class="menu-toggle icon-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu">
+                <button class="menu-toggle icon-btn" id="mobile-menu-btn">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
@@ -60,7 +59,6 @@
                 <li><a href="docs.html">Docs</a></li>
                 <li><a href="check.html">Check</a></li>
                 <li><a href="stats.html">Stats</a></li>
-                <li><a href="index.html#contributors">Contributors</a></li>
                 <li><a href="index.html#download" class="btn btn-primary"
                         style="display: inline-block; text-align: center; width: 100%;">Download Latest</a></li>
             </ul>
@@ -100,16 +98,7 @@
                 <canvas id="platformChart"></canvas>
             </div>
         </div>
-
-                                            <!-- Adsterra Native Banner (564816a58fc302d041bbd2fb61b60d8f) -->
-        <div class="ad-native-wrapper">
-            <div class="ad-native-header">
-                <span class="ad-badge"><i class="fa-solid fa-rectangle-ad"></i> Sponsored Content</span>
-                <a href="https://ardance.org/4/e2a97aece18c389f970f2a5ec4f8ef51" target="_blank" rel="noopener noreferrer sponsored" class="ad-direct-link" title="Sponsored Link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Promoted Partner</a>
-            </div>
-            <script async="async" data-cfasync="false" src="https://bellnewyork.org/21/564816a58fc302d041bbd2fb61b60d8f"></script>
-            <div id="container-564816a58fc302d041bbd2fb61b60d8f" class="ad-native-slot"></div>
-        </div></section>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -127,7 +116,6 @@
                 <div class="footer-links-group">
                     <h4>Resources</h4>
                     <ul>
-                        <li><a href="docs.html">Developer Docs</a></li>
                         <li><a href="https://github.com/samyak2403/RepoStore">Source Code</a></li>
                         <li><a href="https://github.com/samyak2403/RepoStore/wiki">Wiki</a></li>
                         <li><a href="https://github.com/samyak2403/RepoStore/releases">Releases</a></li>
@@ -149,7 +137,7 @@
                 <div class="social-icons">
                     <a href="https://github.com/samyak2403/RepoStore" aria-label="GitHub"><i
                             class="fa-brands fa-github"></i></a>
-                    <a href="https://github.com/samyak2403/RepoStore/discussions" aria-label="Discussions" title="Community Discussions"><i class="fa-solid fa-comments"></i></a>
+                    <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
                 </div>
             </div>
         </div>
@@ -157,10 +145,6 @@
 
     <script src="script.js"></script>
     <script src="stats.js"></script>
-    <!-- Adsterra Social Bar -->
-    <script data-cfasync="false" src="https://bellnewyork.org/14/c5e71e153f71d4eab8cc4c4de0ebaa62"></script>
-    <!-- Adsterra Popunder_1 -->
-    <script data-cfasync="false" src="https://accountut.com/1/0b4e4e70db9e0d1fc799f24e663285e3"></script>
 </body>
 
 </html>

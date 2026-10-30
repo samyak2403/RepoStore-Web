@@ -14,8 +14,6 @@
     --accent-hover: #1d4ed8;
     --border-color: #e4e4e7;
     --card-bg: #ffffff;
-    --primary-color: var(--accent-primary);
-    --bg-color: var(--bg-secondary);
 
     /* Utility shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -339,7 +337,7 @@ h4 {
     border-bottom: 1px solid var(--border-color);
 }
 
-.mobile-menu ul > li:last-child > a {
+.mobile-menu a:last-child {
     border-bottom: none;
     padding-bottom: 0;
 }
@@ -1754,7 +1752,6 @@ h4 {
 .stats-summary {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
     gap: 24px;
     margin-bottom: 32px;
 }
@@ -1940,11 +1937,6 @@ h4 {
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 0 14px;
-    transition: border-color var(--transition), box-shadow var(--transition);
-}
-.check-input-wrap:focus-within {
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 .check-input-wrap i { color: var(--text-secondary); }
 .check-input-wrap input {
@@ -2191,126 +2183,4 @@ h4 {
 @media (max-width: 560px) {
     .check-form { flex-direction: column; }
     .check-header h1 { font-size: 2rem; }
-}
-
-
-/* Adsterra Advertisement & Native Banner Placements */
-.ad-native-wrapper {
-    margin: 36px auto;
-    padding: 20px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    box-shadow: var(--shadow-sm);
-    max-width: 1000px;
-    text-align: left;
-    position: relative;
-    z-index: 5;
-    transition: border-color var(--transition), box-shadow var(--transition);
-}
-
-.ad-native-wrapper:hover {
-    border-color: var(--accent-primary);
-    box-shadow: var(--shadow-md);
-}
-
-.ad-native-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.ad-badge {
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent-primary);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(37, 99, 235, 0.08);
-    padding: 4px 12px;
-    border-radius: 20px;
-}
-
-.ad-source {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-}
-
-.ad-native-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-}
-
-.ad-native-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 16px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    text-decoration: none;
-    color: inherit;
-    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
-}
-
-.ad-native-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent-primary);
-    box-shadow: var(--shadow-sm);
-}
-
-.ad-native-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-    flex-shrink: 0;
-}
-
-.ad-native-info {
-    flex: 1;
-}
-
-.ad-native-info h4 {
-    margin: 0 0 4px 0;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    line-height: 1.3;
-}
-
-.ad-native-info p {
-    margin: 0 0 8px 0;
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    line-height: 1.4;
-}
-
-.ad-native-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--accent-primary);
-}
-
-.ad-native-slot {
-    width: 100%;
-}
-.ad-native-slot:empty {
-    display: none;
 }
